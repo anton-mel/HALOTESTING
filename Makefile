@@ -16,7 +16,7 @@ INCLUDES = -I. -Iintan-reader -Idata-analyser \
 
 # Main Pipeline (Intan Reader + ASIC Sender + Data Logger)
 MAIN_TARGET = run_pipeline
-MAIN_SOURCES = main.cpp data-analyser/data_logger.cpp data-analyser/fpga_raw_logger.cpp
+MAIN_SOURCES = main.cpp data-analyser/fpga_raw_logger.cpp
 MAIN_OBJECTS = $(MAIN_SOURCES:.cpp=.o)
 
 # Intan RHX Device Reader (Standalone Neural Data Acquisition)
@@ -41,9 +41,9 @@ ASIC_SENDER_SOURCES = asic-sender/asic_sender.cpp
 ASIC_SENDER_OBJECTS = $(ASIC_SENDER_SOURCES:.cpp=.o)
 ASIC_SENDER_LDFLAGS = -Lasic-sender -lokFrontPanel -Wl,-rpath,@loader_path/asic-sender
 
-# Data Analyser (Seizure Detection Logging and Analysis)
-DATA_ANALYSER_TARGET = data-analyser/data_logger
-DATA_ANALYSER_SOURCES = data-analyser/data_logger.cpp
+# Data Analyser
+DATA_ANALYSER_TARGET = data-analyser/fpga_raw_logger
+DATA_ANALYSER_SOURCES = data-analyser/fpga_raw_logger.cpp
 DATA_ANALYSER_OBJECTS = $(DATA_ANALYSER_SOURCES:.cpp=.o)
 
 # =============================================================================
@@ -88,7 +88,7 @@ $(ASIC_SENDER_TARGET): $(ASIC_SENDER_OBJECTS)
 	$(CXX) $(ASIC_SENDER_OBJECTS) -o $(ASIC_SENDER_TARGET) $(ASIC_SENDER_LDFLAGS)
 	@echo "ASIC sender built: $(ASIC_SENDER_TARGET)"
 
-# Data Analyser (Seizure Detection Logging and Analysis)
+# Data Analyser
 data_analyser: $(DATA_ANALYSER_TARGET)
 $(DATA_ANALYSER_TARGET): $(DATA_ANALYSER_OBJECTS)
 	@echo "Building data analyser..."
