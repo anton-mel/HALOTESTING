@@ -4,6 +4,8 @@ Testing pipeline for HALO neural data acquisition and FPGA processing.
 
 ## How to Run
 
+Make sure that both of the devices are connected. The modified Intan visualization SDK will be opened automatically.
+
 ```bash
 make run
 ```
@@ -16,5 +18,7 @@ make run
 > [!NOTE] 
 > If the pipeline cannot establish a connection to the device, try power-cycling (restarting) the device.
 
-TODO: Ensure the device is properly flushed and closed to prevent resource leaks or communication errors.
-Include additional data analysis required for the animal testing.
+## TODO
+
+- Ensure the device is properly flushed and closed to prevent resource leaks or communication errors
+- Include additional data analysis required for the animal testing
