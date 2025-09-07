@@ -20,6 +20,6 @@ make run
 
 ## TODO
 
-- Decode ASIC response
+- ~~Decode ASIC response~~
 - Ensure the device is properly flushed and closed to prevent resource leaks or communication errors
 - Include additional data analysis required for the animal testing

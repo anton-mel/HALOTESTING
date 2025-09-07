@@ -1,0 +1,106 @@
+[19:06:52.901] Normal Activity (4.4%) P6
+
+[19:06:53.903] Normal Activity (4.5%) P6
+
+[19:06:54.909] Normal Activity (4.4%) P6
+
+[19:06:55.911] Normal Activity (4.5%) P6
+
+[19:06:56.915] Normal Activity (4.4%) P6
+
+[19:06:57.921] Normal Activity (4.5%) P6
+
+[19:06:58.927] Normal Activity (4.5%) P6
+
+[19:06:59.930] Normal Activity (4.4%) P6
+
+[19:07:00.931] Normal Activity (4.5%) P6
+
+[19:07:01.937] Normal Activity (4.4%) P6
+
+[19:07:02.940] Normal Activity (4.4%) P6
+
+[19:07:03.966] Normal Activity (4.5%) P6
+
+[19:07:04.968] Normal Activity (4.5%) P6
+
+[19:07:05.973] Normal Activity (4.4%) P6
+
+[19:07:06.978] Normal Activity (4.4%) P6
+
+[19:07:07.984] Normal Activity (4.5%) P6
+
+[19:07:09.006] Normal Activity (4.4%) P6
+
+[19:07:10.010] Normal Activity (4.4%) P6
+
+[19:07:11.012] Normal Activity (4.4%) P6
+
+[19:07:12.017] Normal Activity (4.5%) P6
+
+[19:07:13.019] Normal Activity (4.5%) P6
+
+[19:07:14.026] Normal Activity (4.4%) P6
+
+[19:07:15.027] Normal Activity (4.5%) P6
+
+[19:07:16.030] Normal Activity (4.5%) P6
+
+[19:07:17.031] Normal Activity (4.5%) P6
+
+[19:07:18.033] Normal Activity (4.4%) P6
+
+[19:07:19.035] Normal Activity (4.4%) P6
+
+[19:07:20.037] Normal Activity (4.4%) P6
+
+[19:07:21.043] Normal Activity (4.4%) P6
+
+[19:07:22.049] Normal Activity (4.4%) P6
+
+[19:07:23.052] Normal Activity (4.5%) P6
+
+[19:07:24.057] Normal Activity (4.4%) P6
+
+[19:07:25.061] Normal Activity (4.4%) P6
+
+[19:07:26.068] Normal Activity (4.4%) P6
+
+[19:07:27.070] Normal Activity (4.5%) P6
+
+[19:07:28.076] Normal Activity (4.4%) P6
+
+[19:07:29.078] Normal Activity (4.5%) P6
+
+[19:07:30.079] Normal Activity (4.5%) P6
+
+[19:07:31.086] Normal Activity (4.5%) P6
+
+[19:07:32.087] Normal Activity (4.5%) P6
+
+[19:07:33.094] Normal Activity (4.5%) P6
+
+[19:07:34.099] Normal Activity (4.4%) P6
+
+[19:07:35.105] Normal Activity (4.4%) P6
+
+[19:07:36.111] Normal Activity (4.4%) P6
+
+[19:07:37.117] Normal Activity (4.4%) P6
+
+[19:07:38.120] Normal Activity (4.4%) P6
+
+[19:07:39.126] Normal Activity (4.4%) P6
+
+[19:07:40.128] Normal Activity (4.5%) P6
+
+[19:07:41.131] Normal Activity (4.4%) P6
+
+[19:07:42.156] Normal Activity (4.4%) P6
+
+[19:07:43.161] Normal Activity (4.5%) P6
+
+[19:07:44.168] Normal Activity (4.5%) P6
+
+[19:07:45.169] Normal Activity (4.5%) P6
+

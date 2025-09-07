@@ -16,7 +16,7 @@ INCLUDES = -I. -Iintan-reader -Idata-analyser \
 
 # Main Pipeline (Intan Reader + ASIC Sender + Data Logger)
 MAIN_TARGET = run_pipeline
-MAIN_SOURCES = main.cpp data-analyser/fpga_raw_logger.cpp
+MAIN_SOURCES = main.cpp data-analyser/fpga_logger.cpp data-analyser/halo_response_decoder.cpp intan-reader/shared_memory_reader.cpp
 MAIN_OBJECTS = $(MAIN_SOURCES:.cpp=.o)
 
 # Intan RHX Device Reader (Standalone Neural Data Acquisition)
@@ -42,22 +42,25 @@ ASIC_SENDER_OBJECTS = $(ASIC_SENDER_SOURCES:.cpp=.o)
 ASIC_SENDER_LDFLAGS = -Lasic-sender -lokFrontPanel -Wl,-rpath,@loader_path/asic-sender
 
 # Data Analyser
-DATA_ANALYSER_TARGET = data-analyser/fpga_raw_logger
-DATA_ANALYSER_SOURCES = data-analyser/fpga_raw_logger.cpp
+DATA_ANALYSER_TARGET = data-analyser/fpga_logger
+DATA_ANALYSER_SOURCES = data-analyser/fpga_logger.cpp data-analyser/halo_response_decoder.cpp
 DATA_ANALYSER_OBJECTS = $(DATA_ANALYSER_SOURCES:.cpp=.o)
 
 # =============================================================================
 # PHONY TARGETS
 # =============================================================================
-.PHONY: all clean run run_main run_reader run_asic run_asic_sender run_data_analyser \
+.PHONY: all app clean clean-app clean-all run run-all run_main run_reader run_asic run_asic_sender run_data_analyser \
         reader asic asic_sender data_analyser help modified_intan_rhx run_modified_intan_rhx run_pipeline_and_intan
 
 # =============================================================================
 # BUILD TARGETS
 # =============================================================================
 
-# Default target
-all: $(MAIN_TARGET) modified_intan_rhx
+# Default target - just the pipeline
+all: $(MAIN_TARGET)
+
+# Build the modified Intan RHX app separately
+app: modified_intan_rhx
 
 # Main Pipeline Executable (Intan Reader + ASIC Sender + Data Logger)
 $(MAIN_TARGET): $(MAIN_OBJECTS) $(USB3_OBJECTS) $(ASIC_SENDER_OBJECTS)
@@ -95,6 +98,16 @@ $(DATA_ANALYSER_TARGET): $(DATA_ANALYSER_OBJECTS)
 	$(CXX) $(DATA_ANALYSER_OBJECTS) -o $(DATA_ANALYSER_TARGET)
 	@echo "Data analyser built: $(DATA_ANALYSER_TARGET)"
 
+# Test decoder
+test_decoder: data-analyser/tests/test_decoder
+data-analyser/tests/test_decoder: data-analyser/tests/test_decoder.o data-analyser/halo_response_decoder.o
+	@echo "Building HALO decoder test..."
+	$(CXX) data-analyser/tests/test_decoder.o data-analyser/halo_response_decoder.o -o data-analyser/tests/test_decoder
+	@echo "HALO decoder test built: data-analyser/tests/test_decoder"
+
+data-analyser/tests/test_decoder.o: data-analyser/tests/test_decoder.cpp data-analyser/halo_response_decoder.h
+	$(CXX) $(CXXFLAGS) -c data-analyser/tests/test_decoder.cpp -o data-analyser/tests/test_decoder.o
+
 # Modified Intan RHX Pipeline
 modified_intan_rhx:
 	@echo "Building modified Intan RHX pipeline..."
@@ -115,26 +128,38 @@ modified_intan_rhx:
 # CLEANUP TARGETS
 # =============================================================================
 
-# Clean all build artifacts
+# Clean pipeline build artifacts only
 clean:
-	@echo "Cleaning build artifacts..."
+	@echo "Cleaning pipeline build artifacts..."
 	rm -f $(MAIN_OBJECTS) $(MAIN_TARGET)
 	rm -f $(USB3_OBJECTS)
 	rm -f $(ASIC_OBJECTS) $(ASIC_TARGET)
 	rm -f $(ASIC_SENDER_OBJECTS) $(ASIC_SENDER_TARGET)
 	rm -f $(DATA_ANALYSER_OBJECTS) $(DATA_ANALYSER_TARGET)
+	rm -f data-analyser/tests/test_decoder.o data-analyser/tests/test_decoder
+	rm -f asic-sender/tests/test_xem7310.o asic-sender/tests/test_xem7310
 	cd intan-reader && $(MAKE) clean
-	@echo "Cleaning modified-intan-rhx Qt project..."
+	@echo "Pipeline cleanup complete"
+
+# Clean modified Intan RHX app build artifacts
+clean-app:
+	@echo "Cleaning modified Intan RHX app build artifacts..."
 	cd modified-intan-rhx && $(MAKE) clean 2>/dev/null || true
 	rm -f modified-intan-rhx/Makefile modified-intan-rhx/Makefile.Debug modified-intan-rhx/Makefile.Release
-	@echo "Cleanup complete"
+	@echo "App cleanup complete"
+
+# Clean everything
+clean-all: clean clean-app
 
 # =============================================================================
 # RUN TARGETS
 # =============================================================================
 
-# Default run target
-run: all run_pipeline_and_intan
+# Default run target - just the pipeline
+run: all
+
+# Run both pipeline and app
+run-all: all app run_pipeline_and_intan
 
 # Run main pipeline (Intan Reader + ASIC Sender + Data Logger)
 run_main: $(MAIN_TARGET)
@@ -181,14 +206,15 @@ help:
 	@echo ""
 	@echo "Available Targets:"
 	@echo "  all              - Build main pipeline (default)"
+	@echo "  app              - Build modified Intan RHX app"
 	@echo "  reader           - Build standalone Intan reader"
 	@echo "  asic             - Build ASIC FPGA interface"
 	@echo "  asic_sender      - Build ASIC sender"
 	@echo "  data_analyser    - Build data analyser"
-	@echo "  modified_intan_rhx - Build modified Intan RHX pipeline"
 	@echo ""
 	@echo "Run Targets:"
-	@echo "  run              - Build everything, run pipeline, then launch Intan app"
+	@echo "  run              - Build and run main pipeline only"
+	@echo "  run-all          - Build everything, run pipeline, then launch Intan app"
 	@echo "  run_main         - Run main pipeline only"
 	@echo "  run_reader       - Run standalone Intan reader"
 	@echo "  run_asic         - Run ASIC FPGA interface"
@@ -197,13 +223,19 @@ help:
 	@echo "  run_modified_intan_rhx - Run modified Intan RHX pipeline"
 	@echo ""
 	@echo "Maintenance:"
-	@echo "  clean            - Clean all build artifacts"
+	@echo "  clean            - Clean pipeline build artifacts"
+	@echo "  clean-app        - Clean modified Intan RHX app build artifacts"
+	@echo "  clean-all        - Clean everything"
 	@echo "  help             - Show this help message"
 	@echo ""
 	@echo "Usage Examples:"
-	@echo "  make all                    # Build everything"
-	@echo "  make run                    # Build everything, run pipeline, launch Intan app"
+	@echo "  make all                    # Build pipeline only"
+	@echo "  make app                    # Build modified Intan RHX app"
+	@echo "  make run                    # Build and run pipeline only"
+	@echo "  make run-all                 # Build everything, run pipeline, launch Intan app"
 	@echo "  make run_main               # Run main pipeline only"
 	@echo "  make reader && make run_reader  # Build and run Intan reader"
-	@echo "  make clean                  # Clean build artifacts"
+	@echo "  make clean                  # Clean pipeline build artifacts"
+	@echo "  make clean-app               # Clean app build artifacts"
+	@echo "  make clean-all               # Clean everything"
 

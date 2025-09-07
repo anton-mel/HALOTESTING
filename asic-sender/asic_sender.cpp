@@ -1,4 +1,4 @@
-#include "../data-analyser/fpga_raw_logger.h"
+#include "../data-analyser/fpga_logger.h"
 #include "asic_sender.h"
 #include <unistd.h>
 #include <fcntl.h>
@@ -106,8 +106,101 @@ void AsicSender::stopSending() {
     }
 }
 
-void AsicSender::setDataAnalyzer(FpgaRawLogger* analyzer) {
+void AsicSender::setDataAnalyzer(FpgaLogger* analyzer) {
     data_analyzer_ = analyzer;
+}
+
+bool AsicSender::configurePipeline(int pipelineId) {
+    if (!initialized_) {
+        std::cerr << "ASIC Sender not initialized" << std::endl;
+        return false;
+    }
+    
+    std::cout << "Configuring FPGA pipeline: " << pipelineId << std::endl;
+    
+    // Set pipeline configuration via WireIn
+    // Address 0x01: Pipeline selection (0-9)
+    device_->SetWireInValue(0x01, pipelineId, 0x0F); // Use lower 4 bits for pipeline ID
+    device_->UpdateWireIns();
+    
+    // Trigger configuration update
+    device_->ActivateTriggerIn(0x40, 0); // Trigger bit 0 for pipeline config
+    device_->UpdateWireIns();
+    
+    std::cout << "Pipeline " << pipelineId << " configured successfully" << std::endl;
+    return true;
+}
+
+bool AsicSender::enableAnalysisMode() {
+    if (!initialized_) {
+        std::cerr << "ASIC Sender not initialized" << std::endl;
+        return false;
+    }
+    
+    std::cout << "Enabling FPGA analysis mode..." << std::endl;
+    
+    // Set analysis mode via WireIn
+    // Address 0x02: Mode control (bit 0: analysis mode, bit 1: test mode)
+    device_->SetWireInValue(0x02, 0x01, 0x03); // Enable analysis mode, disable test mode
+    device_->UpdateWireIns();
+    
+    // Trigger mode change
+    device_->ActivateTriggerIn(0x40, 1); // Trigger bit 1 for mode change
+    device_->UpdateWireIns();
+    
+    std::cout << "Analysis mode enabled successfully" << std::endl;
+    return true;
+}
+
+bool AsicSender::disableTestPattern() {
+    if (!initialized_) {
+        std::cerr << "ASIC Sender not initialized" << std::endl;
+        return false;
+    }
+    
+    std::cout << "Disabling FPGA test pattern mode..." << std::endl;
+    
+    // Disable test pattern generation
+    // Address 0x03: Test pattern control (bit 0: enable/disable test pattern)
+    device_->SetWireInValue(0x03, 0x00, 0x01); // Disable test pattern
+    device_->UpdateWireIns();
+    
+    // Trigger test pattern disable
+    device_->ActivateTriggerIn(0x40, 2); // Trigger bit 2 for test pattern control
+    device_->UpdateWireIns();
+    
+    std::cout << "Test pattern mode disabled successfully" << std::endl;
+    return true;
+}
+
+bool AsicSender::setThresholds(double lowThreshold, double highThreshold) {
+    if (!initialized_) {
+        std::cerr << "ASIC Sender not initialized" << std::endl;
+        return false;
+    }
+    
+    std::cout << "Setting FPGA thresholds - Low: " << lowThreshold << ", High: " << highThreshold << std::endl;
+    
+    // Convert thresholds to 16-bit values (0-65535 range)
+    uint16_t lowThresh = static_cast<uint16_t>(lowThreshold * 65535);
+    uint16_t highThresh = static_cast<uint16_t>(highThreshold * 65535);
+    
+    // Set low threshold via WireIn
+    // Address 0x04-0x05: Low threshold (16-bit)
+    device_->SetWireInValue(0x04, lowThresh, 0xFFFF);
+    device_->UpdateWireIns();
+    
+    // Set high threshold via WireIn  
+    // Address 0x06-0x07: High threshold (16-bit)
+    device_->SetWireInValue(0x06, highThresh, 0xFFFF);
+    device_->UpdateWireIns();
+    
+    // Trigger threshold update
+    device_->ActivateTriggerIn(0x40, 3); // Trigger bit 3 for threshold update
+    device_->UpdateWireIns();
+    
+    std::cout << "Thresholds set successfully" << std::endl;
+    return true;
 }
 
 void AsicSender::sendWaveformData(const std::vector<uint8_t>& waveformData) {

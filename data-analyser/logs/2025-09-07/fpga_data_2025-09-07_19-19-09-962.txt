@@ -1,0 +1,652 @@
+[19:19:10.070] Normal Activity (2.2%) P6
+
+[19:19:10.171] Normal Activity (1.5%) P6
+
+[19:19:10.275] Normal Activity (17.7%) P6
+
+[19:19:10.375] Elevated Activity (57.3%) P6 A:0.57
+
+[19:19:10.476] Normal Activity (27.7%) P6
+
+[19:19:10.579] Elevated Activity (68.5%) P6 A:0.68
+
+[19:19:10.682] Elevated Activity (35.3%) P6 A:0.35
+
+[19:19:10.786] Normal Activity (1.9%) P6
+
+[19:19:10.890] Normal Activity (1.5%) P6
+
+[19:19:10.995] SEIZURE DETECTED (71.3%) P6 A:0.71
+
+[19:19:11.096] SEIZURE DETECTED (71.0%) P6 A:0.71
+
+[19:19:11.197] SEIZURE DETECTED (71.3%) P6 A:0.71
+
+[19:19:11.303] Normal Activity (3.1%) P6
+
+[19:19:11.405] Normal Activity (1.5%) P6
+
+[19:19:11.508] Normal Activity (12.8%) P6
+
+[19:19:11.611] Elevated Activity (53.6%) P6 A:0.54
+
+[19:19:11.716] Elevated Activity (48.1%) P6 A:0.48
+
+[19:19:11.817] Normal Activity (6.0%) P6
+
+[19:19:11.923] Normal Activity (1.5%) P6
+
+[19:19:12.027] SEIZURE DETECTED (70.1%) P6 A:0.70
+
+[19:19:12.128] SEIZURE DETECTED (71.3%) P6 A:0.71
+
+[19:19:12.231] SEIZURE DETECTED (71.2%) P6 A:0.71
+
+[19:19:12.334] Normal Activity (13.0%) P6
+
+[19:19:12.438] Normal Activity (1.5%) P6
+
+[19:19:12.541] Normal Activity (2.1%) P6
+
+[19:19:12.642] Elevated Activity (41.6%) P6 A:0.42
+
+[19:19:12.748] Elevated Activity (59.4%) P6 A:0.59
+
+[19:19:12.850] Normal Activity (20.8%) P6
+
+[19:19:12.952] Normal Activity (1.5%) P6
+
+[19:19:13.053] Normal Activity (10.4%) P6
+
+[19:19:13.157] Elevated Activity (34.9%) P6 A:0.35
+
+[19:19:13.258] Normal Activity (3.0%) P6
+
+[19:19:13.362] SEIZURE DETECTED (71.3%) P6 A:0.71
+
+[19:19:13.463] SEIZURE DETECTED (70.9%) P6 A:0.71
+
+[19:19:13.569] Normal Activity (18.2%) P6
+
+[19:19:13.670] Normal Activity (1.5%) P6
+
+[19:19:13.771] Normal Activity (1.5%) P6
+
+[19:19:13.872] Normal Activity (1.5%) P6
+
+[19:19:13.974] Normal Activity (4.4%) P6
+
+[19:19:14.076] Elevated Activity (45.8%) P6 A:0.46
+
+[19:19:14.182] Elevated Activity (55.7%) P6 A:0.56
+
+[19:19:14.284] Normal Activity (15.5%) P6
+
+[19:19:14.385] Elevated Activity (48.0%) P6 A:0.48
+
+[19:19:14.491] Normal Activity (1.7%) P6
+
+[19:19:14.592] Elevated Activity (39.5%) P6 A:0.40
+
+[19:19:14.693] SEIZURE DETECTED (70.2%) P6 A:0.70
+
+[19:19:14.796] SEIZURE DETECTED (71.3%) P6 A:0.71
+
+[19:19:14.901] Elevated Activity (53.7%) P6 A:0.54
+
+[19:19:15.007] Normal Activity (1.5%) P6
+
+[19:19:15.108] Elevated Activity (33.0%) P6 A:0.33
+
+[19:19:15.214] Elevated Activity (65.4%) P6 A:0.65
+
+[19:19:15.339] Normal Activity (1.5%) P6
+
+[19:19:15.441] Normal Activity (23.5%) P6
+
+[19:19:15.542] Elevated Activity (61.4%) P6 A:0.61
+
+[19:19:15.645] SEIZURE DETECTED (71.3%) P6 A:0.71
+
+[19:19:15.749] Elevated Activity (65.2%) P6 A:0.65
+
+[19:19:15.854] Normal Activity (1.5%) P6
+
+[19:19:15.958] Normal Activity (16.2%) P6
+
+[19:19:16.059] Elevated Activity (56.2%) P6 A:0.56
+
+[19:19:16.165] Elevated Activity (45.3%) P6 A:0.45
+
+[19:19:16.271] Normal Activity (4.2%) P6
+
+[19:19:16.375] Elevated Activity (42.3%) P6 A:0.42
+
+[19:19:16.481] Elevated Activity (58.8%) P6 A:0.59
+
+[19:19:16.586] Normal Activity (19.8%) P6
+
+[19:19:16.691] Normal Activity (26.1%) P6
+
+[19:19:16.795] Elevated Activity (63.1%) P6 A:0.63
+
+[19:19:16.897] SEIZURE DETECTED (71.3%) P6 A:0.71
+
+[19:19:16.999] Elevated Activity (63.9%) P6 A:0.64
+
+[19:19:17.102] Normal Activity (27.7%) P6
+
+[19:19:17.206] Normal Activity (18.3%) P6
+
+[19:19:17.308] Normal Activity (1.5%) P6
+
+[19:19:17.414] SEIZURE DETECTED (71.3%) P6 A:0.71
+
+[19:19:17.516] Elevated Activity (68.3%) P6 A:0.68
+
+[19:19:17.618] Elevated Activity (35.2%) P6 A:0.35
+
+[19:19:17.722] Normal Activity (10.5%) P6
+
+[19:19:17.824] Normal Activity (1.5%) P6
+
+[19:19:17.928] SEIZURE DETECTED (71.3%) P6 A:0.71
+
+[19:19:18.034] Normal Activity (8.0%) P6
+
+[19:19:18.139] Normal Activity (1.5%) P6
+
+[19:19:18.240] Normal Activity (4.2%) P6
+
+[19:19:18.341] Elevated Activity (45.5%) P6 A:0.46
+
+[19:19:18.447] Elevated Activity (56.0%) P6 A:0.56
+
+[19:19:18.550] Normal Activity (15.9%) P6
+
+[19:19:18.653] Normal Activity (1.5%) P6
+
+[19:19:18.758] Normal Activity (1.6%) P6
+
+[19:19:18.861] SEIZURE DETECTED (71.3%) P6 A:0.71
+
+[19:19:18.962] Elevated Activity (70.0%) P6 A:0.70
+
+[19:19:19.068] Normal Activity (24.0%) P6
+
+[19:19:19.169] Normal Activity (1.5%) P6
+
+[19:19:19.275] Elevated Activity (60.3%) P6 A:0.60
+
+[19:19:19.381] Elevated Activity (40.5%) P6 A:0.41
+
+[19:19:19.482] Elevated Activity (66.3%) P6 A:0.66
+
+[19:19:19.585] Elevated Activity (31.6%) P6 A:0.32
+
+[19:19:19.691] Normal Activity (14.2%) P6
+
+[19:19:19.794] Elevated Activity (54.6%) P6 A:0.55
+
+[19:19:19.899] Elevated Activity (47.2%) P6 A:0.47
+
+[19:19:20.001] Normal Activity (5.3%) P6
+
+[19:19:20.102] Elevated Activity (38.9%) P6 A:0.39
+
+[19:19:20.208] Normal Activity (6.7%) P6
+
+[19:19:20.309] Elevated Activity (48.3%) P6 A:0.48
+
+[19:19:20.411] SEIZURE DETECTED (71.2%) P6 A:0.71
+
+[19:19:20.512] Elevated Activity (55.9%) P6 A:0.56
+
+[19:19:20.615] SEIZURE DETECTED (71.3%) P6 A:0.71
+
+[19:19:20.718] Normal Activity (4.4%) P6
+
+[19:19:20.822] Normal Activity (1.5%) P6
+
+[19:19:20.925] Normal Activity (8.3%) P6
+
+[19:19:21.028] SEIZURE DETECTED (71.3%) P6 A:0.71
+
+[19:19:21.131] Elevated Activity (52.3%) P6 A:0.52
+
+[19:19:21.235] Normal Activity (10.8%) P6
+
+[19:19:21.340] Elevated Activity (34.4%) P6 A:0.34
+
+[19:19:21.441] Normal Activity (2.7%) P6
+
+[19:19:21.543] Elevated Activity (43.0%) P6 A:0.43
+
+[19:19:21.645] SEIZURE DETECTED (70.8%) P6 A:0.71
+
+[19:19:21.749] SEIZURE DETECTED (71.3%) P6 A:0.71
+
+[19:19:21.850] Elevated Activity (51.0%) P6 A:0.51
+
+[19:19:21.956] Normal Activity (1.5%) P6
+
+[19:19:22.062] SEIZURE DETECTED (71.3%) P6 A:0.71
+
+[19:19:22.166] Elevated Activity (63.7%) P6 A:0.64
+
+[19:19:22.268] Normal Activity (27.5%) P6
+
+[19:19:22.373] Normal Activity (18.5%) P6
+
+[19:19:22.475] Elevated Activity (57.7%) P6 A:0.58
+
+[19:19:22.576] Normal Activity (28.1%) P6
+
+[19:19:22.682] Elevated Activity (68.3%) P6 A:0.68
+
+[19:19:22.786] Elevated Activity (35.2%) P6 A:0.35
+
+[19:19:22.890] Normal Activity (10.4%) P6
+
+[19:19:22.992] Elevated Activity (51.5%) P6 A:0.52
+
+[19:19:23.098] Elevated Activity (50.4%) P6 A:0.50
+
+[19:19:23.199] SEIZURE DETECTED (71.1%) P6 A:0.71
+
+[19:19:23.305] Normal Activity (1.5%) P6
+
+[19:19:23.409] Normal Activity (3.7%) P6
+
+[19:19:23.513] SEIZURE DETECTED (71.3%) P6 A:0.71
+
+[19:19:23.615] Elevated Activity (57.0%) P6 A:0.57
+
+[19:19:23.720] Normal Activity (1.5%) P6
+
+[19:19:23.824] Normal Activity (28.4%) P6
+
+[19:19:23.928] Elevated Activity (64.5%) P6 A:0.64
+
+[19:19:24.030] SEIZURE DETECTED (71.3%) P6 A:0.71
+
+[19:19:24.135] Normal Activity (1.9%) P6
+
+[19:19:24.238] Normal Activity (1.5%) P6
+
+[19:19:24.340] Normal Activity (19.8%) P6
+
+[19:19:24.442] Normal Activity (1.5%) P6
+
+[19:19:24.548] SEIZURE DETECTED (71.3%) P6 A:0.71
+
+[19:19:24.650] Elevated Activity (67.7%) P6 A:0.68
+
+[19:19:24.751] Elevated Activity (34.3%) P6 A:0.34
+
+[19:19:24.854] Normal Activity (1.8%) P6
+
+[19:19:24.960] Elevated Activity (52.2%) P6 A:0.52
+
+[19:19:25.061] SEIZURE DETECTED (71.3%) P6 A:0.71
+
+[19:19:25.167] SEIZURE DETECTED (71.0%) P6 A:0.71
+
+[19:19:25.269] Elevated Activity (41.9%) P6 A:0.42
+
+[19:19:25.370] Normal Activity (3.1%) P6
+
+[19:19:25.475] Elevated Activity (45.1%) P6 A:0.45
+
+[19:19:25.576] Normal Activity (11.9%) P6
+
+[19:19:25.677] Elevated Activity (52.5%) P6 A:0.52
+
+[19:19:25.782] Elevated Activity (49.7%) P6 A:0.50
+
+[19:19:25.884] Normal Activity (7.8%) P6
+
+[19:19:25.985] Elevated Activity (42.0%) P6 A:0.42
+
+[19:19:26.088] Normal Activity (3.2%) P6
+
+[19:19:26.192] Elevated Activity (44.9%) P6 A:0.45
+
+[19:19:26.298] Elevated Activity (56.8%) P6 A:0.57
+
+[19:19:26.401] Normal Activity (17.3%) P6
+
+[19:19:26.507] Normal Activity (28.2%) P6
+
+[19:19:26.609] Elevated Activity (64.4%) P6 A:0.64
+
+[19:19:26.715] SEIZURE DETECTED (71.3%) P6 A:0.71
+
+[19:19:26.817] Elevated Activity (63.1%) P6 A:0.63
+
+[19:19:26.923] Normal Activity (1.5%) P6
+
+[19:19:27.025] Normal Activity (19.1%) P6
+
+[19:19:27.128] Elevated Activity (58.0%) P6 A:0.58
+
+[19:19:27.233] Elevated Activity (43.5%) P6 A:0.44
+
+[19:19:27.334] Elevated Activity (68.3%) P6 A:0.68
+
+[19:19:27.435] Elevated Activity (35.5%) P6 A:0.35
+
+[19:19:27.536] Normal Activity (2.0%) P6
+
+[19:19:27.640] Normal Activity (1.5%) P6
+
+[19:19:27.742] Normal Activity (18.8%) P6
+
+[19:19:27.844] Elevated Activity (57.7%) P6 A:0.58
+
+[19:19:27.946] SEIZURE DETECTED (71.3%) P6 A:0.71
+
+[19:19:28.049] Elevated Activity (68.5%) P6 A:0.69
+
+[19:19:28.155] Normal Activity (1.5%) P6
+
+[19:19:28.257] Normal Activity (9.3%) P6
+
+[19:19:28.359] Elevated Activity (50.4%) P6 A:0.50
+
+[19:19:28.465] SEIZURE DETECTED (71.2%) P6 A:0.71
+
+[19:19:28.566] SEIZURE DETECTED (71.2%) P6 A:0.71
+
+[19:19:28.668] Elevated Activity (44.4%) P6 A:0.44
+
+[19:19:28.773] Normal Activity (2.6%) P6
+
+[19:19:28.875] Normal Activity (1.5%) P6
+
+[19:19:28.981] SEIZURE DETECTED (70.6%) P6 A:0.71
+
+[19:19:29.081] SEIZURE DETECTED (71.3%) P6 A:0.71
+
+[19:19:29.182] Elevated Activity (52.2%) P6 A:0.52
+
+[19:19:29.288] Normal Activity (11.1%) P6
+
+[19:19:29.391] Elevated Activity (33.6%) P6 A:0.34
+
+[19:19:29.497] Elevated Activity (67.7%) P6 A:0.68
+
+[19:19:29.603] Elevated Activity (30.2%) P6 A:0.30
+
+[19:19:29.704] Normal Activity (1.5%) P6
+
+[19:19:29.808] Normal Activity (1.5%) P6
+
+[19:19:29.912] SEIZURE DETECTED (71.3%) P6 A:0.71
+
+[19:19:30.013] Elevated Activity (61.7%) P6 A:0.62
+
+[19:19:30.119] Elevated Activity (39.2%) P6 A:0.39
+
+[19:19:30.225] Normal Activity (6.2%) P6
+
+[19:19:30.330] SEIZURE DETECTED (71.3%) P6 A:0.71
+
+[19:19:30.431] SEIZURE DETECTED (71.1%) P6 A:0.71
+
+[19:19:30.533] SEIZURE DETECTED (71.3%) P6 A:0.71
+
+[19:19:30.633] Elevated Activity (47.6%) P6 A:0.48
+
+[19:19:30.734] SEIZURE DETECTED (70.4%) P6 A:0.70
+
+[19:19:30.835] Elevated Activity (40.1%) P6 A:0.40
+
+[19:19:30.941] Normal Activity (5.3%) P6
+
+[19:19:31.045] Elevated Activity (46.4%) P6 A:0.46
+
+[19:19:31.149] SEIZURE DETECTED (71.0%) P6 A:0.71
+
+[19:19:31.254] Normal Activity (15.9%) P6
+
+[19:19:31.358] Normal Activity (1.5%) P6
+
+[19:19:31.459] Normal Activity (1.6%) P6
+
+[19:19:31.565] SEIZURE DETECTED (71.3%) P6 A:0.71
+
+[19:19:31.671] Normal Activity (1.9%) P6
+
+[19:19:31.772] Normal Activity (1.5%) P6
+
+[19:19:31.874] Normal Activity (1.5%) P6
+
+[19:19:31.975] Normal Activity (1.5%) P6
+
+[19:19:32.076] Normal Activity (27.7%) P6
+
+[19:19:32.182] Elevated Activity (68.7%) P6 A:0.69
+
+[19:19:32.288] Elevated Activity (36.3%) P6 A:0.36
+
+[19:19:32.390] Normal Activity (2.1%) P6
+
+[19:19:32.492] Normal Activity (1.5%) P6
+
+[19:19:32.597] SEIZURE DETECTED (71.2%) P6 A:0.71
+
+[19:19:32.703] Normal Activity (11.7%) P6
+
+[19:19:32.807] Normal Activity (1.5%) P6
+
+[19:19:32.908] Normal Activity (2.4%) P6
+
+[19:19:33.014] Elevated Activity (42.3%) P6 A:0.42
+
+[19:19:33.119] Elevated Activity (59.4%) P6 A:0.59
+
+[19:19:33.220] Normal Activity (21.3%) P6
+
+[19:19:33.324] Normal Activity (1.5%) P6
+
+[19:19:33.425] Normal Activity (1.5%) P6
+
+[19:19:33.526] Elevated Activity (32.7%) P6 A:0.33
+
+[19:19:33.632] Elevated Activity (67.1%) P6 A:0.67
+
+[19:19:33.733] SEIZURE DETECTED (71.3%) P6 A:0.71
+
+[19:19:33.839] Normal Activity (1.6%) P6
+
+[19:19:33.940] Normal Activity (1.5%) P6
+
+[19:19:34.041] Normal Activity (1.5%) P6
+
+[19:19:34.143] Normal Activity (1.5%) P6
+
+[19:19:34.245] Elevated Activity (31.2%) P6 A:0.31
+
+[19:19:34.351] Elevated Activity (67.0%) P6 A:0.67
+
+[19:19:34.456] Normal Activity (1.5%) P6
+
+[19:19:34.559] Normal Activity (12.0%) P6
+
+[19:19:34.661] Elevated Activity (52.7%) P6 A:0.53
+
+[19:19:34.762] Normal Activity (21.0%) P6
+
+[19:19:34.865] Elevated Activity (59.1%) P6 A:0.59
+
+[19:19:34.966] SEIZURE DETECTED (71.3%) P6 A:0.71
+
+[19:19:35.070] Elevated Activity (68.1%) P6 A:0.68
+
+[19:19:35.174] Normal Activity (1.5%) P6
+
+[19:19:35.276] Normal Activity (9.7%) P6
+
+[19:19:35.382] SEIZURE DETECTED (71.3%) P6 A:0.71
+
+[19:19:35.487] Elevated Activity (51.7%) P6 A:0.52
+
+[19:19:35.589] Normal Activity (10.2%) P6
+
+[19:19:35.691] Normal Activity (1.5%) P6
+
+[19:19:35.796] Elevated Activity (68.3%) P6 A:0.68
+
+[19:19:35.902] SEIZURE DETECTED (71.3%) P6 A:0.71
+
+[19:19:36.003] Elevated Activity (59.5%) P6 A:0.60
+
+[19:19:36.108] Normal Activity (1.5%) P6
+
+[19:19:36.212] Normal Activity (24.0%) P6
+
+[19:19:36.314] Elevated Activity (61.2%) P6 A:0.61
+
+[19:19:36.414] SEIZURE DETECTED (71.3%) P6 A:0.71
+
+[19:19:36.520] Elevated Activity (66.5%) P6 A:0.66
+
+[19:19:36.624] Normal Activity (1.5%) P6
+
+[19:19:36.726] Normal Activity (12.8%) P6
+
+[19:19:36.832] SEIZURE DETECTED (71.3%) P6 A:0.71
+
+[19:19:36.934] SEIZURE DETECTED (71.3%) P6 A:0.71
+
+[19:19:37.038] Normal Activity (8.0%) P6
+
+[19:19:37.140] Normal Activity (1.5%) P6
+
+[19:19:37.242] Normal Activity (3.2%) P6
+
+[19:19:37.344] Normal Activity (1.5%) P6
+
+[19:19:37.449] SEIZURE DETECTED (70.9%) P6 A:0.71
+
+[19:19:37.554] Normal Activity (19.6%) P6
+
+[19:19:37.655] Elevated Activity (51.6%) P6 A:0.52
+
+[19:19:37.756] Normal Activity (10.5%) P6
+
+[19:19:37.862] Elevated Activity (34.3%) P6 A:0.34
+
+[19:19:37.963] Elevated Activity (68.0%) P6 A:0.68
+
+[19:19:38.065] Elevated Activity (41.7%) P6 A:0.42
+
+[19:19:38.170] Elevated Activity (60.2%) P6 A:0.60
+
+[19:19:38.275] Normal Activity (22.7%) P6
+
+[19:19:38.376] Normal Activity (1.5%) P6
+
+[19:19:38.482] Elevated Activity (60.5%) P6 A:0.61
+
+[19:19:38.584] SEIZURE DETECTED (71.3%) P6 A:0.71
+
+[19:19:38.688] Elevated Activity (66.7%) P6 A:0.67
+
+[19:19:38.791] Normal Activity (1.5%) P6
+
+[19:19:38.897] Normal Activity (12.5%) P6
+
+[19:19:39.001] SEIZURE DETECTED (71.3%) P6 A:0.71
+
+[19:19:39.102] Elevated Activity (50.0%) P6 A:0.50
+
+[19:19:39.204] SEIZURE DETECTED (71.1%) P6 A:0.71
+
+[19:19:39.309] Normal Activity (1.5%) P6
+
+[19:19:39.412] Normal Activity (3.0%) P6
+
+[19:19:39.515] Elevated Activity (43.6%) P6 A:0.44
+
+[19:19:39.616] SEIZURE DETECTED (70.9%) P6 A:0.71
+
+[19:19:39.722] Normal Activity (20.0%) P6
+
+[19:19:39.824] Normal Activity (1.5%) P6
+
+[19:19:39.925] Normal Activity (11.1%) P6
+
+[19:19:40.026] Normal Activity (1.5%) P6
+
+[19:19:40.127] Normal Activity (2.1%) P6
+
+[19:19:40.230] Elevated Activity (41.1%) P6 A:0.41
+
+[19:19:40.332] SEIZURE DETECTED (70.5%) P6 A:0.70
+
+[19:19:40.433] SEIZURE DETECTED (71.3%) P6 A:0.71
+
+[19:19:40.534] SEIZURE DETECTED (71.2%) P6 A:0.71
+
+[19:19:40.640] Normal Activity (14.0%) P6
+
+[19:19:40.741] Normal Activity (1.5%) P6
+
+[19:19:40.847] Normal Activity (1.6%) P6
+
+[19:19:40.949] Elevated Activity (38.7%) P6 A:0.39
+
+[19:19:41.055] Elevated Activity (62.6%) P6 A:0.63
+
+[19:19:41.157] Normal Activity (27.2%) P6
+
+[19:19:41.259] Normal Activity (1.5%) P6
+
+[19:19:41.365] Elevated Activity (56.1%) P6 A:0.56
+
+[19:19:41.470] SEIZURE DETECTED (71.3%) P6 A:0.71
+
+[19:19:41.575] Normal Activity (4.1%) P6
+
+[19:19:41.676] Normal Activity (1.5%) P6
+
+[19:19:41.778] Normal Activity (8.1%) P6
+
+[19:19:41.879] Normal Activity (1.5%) P6
+
+[19:19:41.980] Normal Activity (16.4%) P6
+
+[19:19:42.081] Elevated Activity (55.8%) P6 A:0.56
+
+[19:19:42.182] Normal Activity (24.7%) P6
+
+[19:19:42.284] Elevated Activity (61.6%) P6 A:0.62
+
+[19:19:42.390] Elevated Activity (39.8%) P6 A:0.40
+
+[19:19:42.492] Normal Activity (2.6%) P6
+
+[19:19:42.594] Normal Activity (1.5%) P6
+
+[19:19:42.695] Normal Activity (12.3%) P6
+
+[19:19:42.798] Elevated Activity (52.5%) P6 A:0.53
+
+[19:19:42.902] SEIZURE DETECTED (71.3%) P6 A:0.71
+
+[19:19:43.007] Normal Activity (8.4%) P6
+
+[19:19:43.112] Normal Activity (1.5%) P6
+
+[19:19:43.217] Elevated Activity (68.8%) P6 A:0.69
+
+[19:19:43.318] SEIZURE DETECTED (71.3%) P6 A:0.71
+
+[19:19:43.424] Elevated Activity (58.3%) P6 A:0.58
+
+[19:19:43.530] Normal Activity (1.5%) P6
+
+[19:19:43.635] SEIZURE DETECTED (71.3%) P6 A:0.71
+
