@@ -39,9 +39,14 @@
 #include <mutex>
 #include <chrono>
 #include <deque>
+#ifdef _WIN32
+#include <windows.h>
+#else
+#include <unistd.h>
 #include <sys/mman.h>
 #include <fcntl.h>
 #include <sys/stat.h>
+#endif
 
 // Intan data structures for TCP communication
 struct IntanDataHeader {
@@ -155,10 +160,18 @@ private:
     
     // Shared memory fast path
     bool shmConnected = false;
+#ifdef _WIN32
+    HANDLE shmHandle = nullptr;
+#else
     int shmFd = -1;
+#endif
     void* shmBase = nullptr;
     size_t shmSize = 0;
-    const char* shmName = "/intan_rhx_shm_v1";
+#ifdef _WIN32
+    const char* shmName = "intan_rhx_shm_v1"; // Named shared memory object on Windows
+#else
+    const char* shmName = "/intan_rhx_shm_v1"; // POSIX shared memory name
+#endif
     uint32_t lastShmTimestamp = 0;
     bool hasTCPData;
     std::thread tcpThread;

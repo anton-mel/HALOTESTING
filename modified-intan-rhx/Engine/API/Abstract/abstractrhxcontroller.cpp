@@ -89,7 +89,7 @@ void AbstractRHXController::initialize()
         setGlobalSettlePolicy(false, false, false, false, false);
         setTtlOutMode(false, false, false, false, false, false, false, false);
     }
-    setSampleRate(SampleRate30000Hz);  // By default, initialize to highest sampling rate.
+    setSampleRate(SampleRate1000Hz);  // By default, initialize to 1kHz sampling rate.
     if (type == ControllerRecordUSB2 || type == ControllerRecordUSB3) {
         selectAuxCommandBankAllPorts(AuxCmd1, 0);
         selectAuxCommandBankAllPorts(AuxCmd2, 0);

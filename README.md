@@ -20,6 +20,8 @@ Make sure that both of the devices are connected. The modified Intan visualizati
 make run
 ```
 
+For Windows, ensure all required packages are installed. Primarity, you will need the mingw32-make & mingw_64/msvc in the path to be able to run the Makefile. The GUI is built using Qt. For Windows builds, download the Qt installer from the official website: https://www.qt.io/download-qt-installer.
+
 ## Documentation
 
 - API documentation: https://intantech.com/files/Intan_RHD2000_USB3_FPGA_interface.pdf
@@ -31,5 +33,7 @@ make run
 ## TODO
 
 - ~~Decode ASIC response~~
+- Fix the loggin format to the HDF files
+- Make the pipeline run on the 1kHz aquisition frequencies
 - Ensure the device is properly flushed and closed to prevent resource leaks or communication errors
 - Include additional data analysis required for the animal testing

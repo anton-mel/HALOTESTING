@@ -1,15 +1,20 @@
 #include "../data-analyser/fpga_logger.h"
 #include "asic_sender.h"
+#include <cstring>
+#ifdef _WIN32
+#define NOMINMAX
+#include <windows.h>
+#else
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/select.h>
-#include <cstring>
+#endif
 
 // Static member definitions
 const size_t AsicSender::BUF_LEN = 16384; // Must be multiple of 16 for USB 3.0
 
 AsicSender::AsicSender() : device_(nullptr), running_(false), initialized_(false), data_analyzer_(nullptr) {
-    device_ = new OpalKellyLegacy::okCFrontPanel();
+    device_ = new okCFrontPanel();
 }
 
 AsicSender::~AsicSender() {
@@ -27,7 +32,7 @@ bool AsicSender::initialize(const std::string& deviceSerial, const std::string& 
     int error = device_->OpenBySerial(deviceSerial.c_str());
     std::cout << "OpenBySerial ret value: " << error << std::endl;
     
-    if (error != OpalKellyLegacy::okCFrontPanel::NoError) {
+    if (error != okCFrontPanel::NoError) {
         std::cerr << "Failed to open ASIC device with serial: " << deviceSerial << std::endl;
         return false;
     }
@@ -52,7 +57,7 @@ bool AsicSender::configureFpga(const std::string& bitfilePath) {
     int error = device_->ConfigureFPGA(bitfilePath.c_str());
     std::cout << "ConfigureFPGA ret value: " << error << std::endl;
     
-    return (error == OpalKellyLegacy::okCFrontPanel::NoError);
+    return (error == okCFrontPanel::NoError);
 }
 
 void AsicSender::resetFifo() {
@@ -69,7 +74,7 @@ void AsicSender::resetFifo() {
 }
 
 bool AsicSender::writeToFpga(const std::vector<uint8_t>& data) {
-    int writeRet = device_->WriteToPipeIn(0x80, data.size(), data.data());
+    int writeRet = device_->WriteToPipeIn(0x80, static_cast<long>(data.size()), const_cast<unsigned char*>(data.data()));
     
     // Return value is the number of bytes written, not an error code
     return (writeRet > 0);
@@ -78,7 +83,7 @@ bool AsicSender::writeToFpga(const std::vector<uint8_t>& data) {
 bool AsicSender::readFromFpga(std::vector<uint8_t>& data) {
     data.resize(BUF_LEN);
     
-    int readRet = device_->ReadFromPipeOut(0xA0, data.size(), data.data());
+    int readRet = device_->ReadFromPipeOut(0xA0, static_cast<long>(data.size()), data.data());
     
     // Return value is the number of bytes read, not an error code
     if (readRet > 0) {

@@ -19,8 +19,9 @@
 #include <cstdlib>
 #include <algorithm>
 
-#include "intan-reader/intan_reader.h"
+// Include shared memory first to avoid Windows RPC 'byte' ambiguity with std::byte
 #include "intan-reader/shared_memory_reader.h"
+#include "intan-reader/intan_reader.h"
 #include "asic-sender/asic_sender.h"
 #include "data-analyser/fpga_logger.h"
 #include "data-analyser/halo_response_decoder.h"

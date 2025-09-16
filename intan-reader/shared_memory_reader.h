@@ -1,10 +1,15 @@
 #ifndef SHARED_MEMORY_READER_H
 #define SHARED_MEMORY_READER_H
 
+#ifdef _WIN32
+#define NOMINMAX
+#include <windows.h>
+#else
 #include <sys/mman.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/stat.h>
+#endif
 #include <vector>
 #include <mutex>
 #include <chrono>
@@ -23,9 +28,13 @@ public:
 private:
     bool openSharedMemory();
     
+#ifdef _WIN32
+    HANDLE shmHandle;
+#else
     int shmFd;
-    void* shmBase;
     size_t shmSize;
+#endif
+    void* shmBase;
     const char* shmName;
     
     // Direct memory access pointers

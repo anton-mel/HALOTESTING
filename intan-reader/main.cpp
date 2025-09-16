@@ -11,7 +11,7 @@ int main(int argc, char* argv[]) {
 
     try {
         // Create RHX controller for USB3 recording controller
-        RHXController controller(ControllerRecordUSB3, SampleRate30000Hz, false);
+        RHXController controller(ControllerRecordUSB3, SampleRate1000Hz, false);
         
         // List available devices
         std::vector<std::string> devices = controller.listAvailableDeviceSerials();

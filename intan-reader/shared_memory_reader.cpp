@@ -3,7 +3,11 @@
 #include <cstring>
 
 SharedMemoryReader::SharedMemoryReader() 
+#ifdef _WIN32
+    : shmHandle(nullptr), shmBase(nullptr), shmName("intan_rhx_shm_v1"), 
+#else
     : shmFd(-1), shmBase(nullptr), shmSize(0), shmName("/intan_rhx_shm_v1"), 
+#endif
       header(nullptr), shmInput(nullptr), lastTimestamp(0) {
 }
 
@@ -16,6 +20,26 @@ bool SharedMemoryReader::initialize() {
 }
 
 bool SharedMemoryReader::openSharedMemory() {
+#ifdef _WIN32
+    // Open existing named file mapping
+    shmHandle = OpenFileMappingA(FILE_MAP_READ, FALSE, shmName);
+    if (!shmHandle) {
+        std::cerr << "Failed to open shared memory mapping" << std::endl;
+        return false;
+    }
+    shmBase = MapViewOfFile(shmHandle, FILE_MAP_READ, 0, 0, 0);
+    if (!shmBase) {
+        std::cerr << "Failed to map view of shared memory" << std::endl;
+        CloseHandle(shmHandle);
+        shmHandle = nullptr;
+        return false;
+    }
+    // On Windows, we do not easily get size from mapping without additional bookkeeping; rely on header->dataSize when reading
+    header = static_cast<IntanDataHeader*>(shmBase);
+    shmInput = reinterpret_cast<IntanDataBlock*>(static_cast<char*>(shmBase) + sizeof(IntanDataHeader));
+    std::cout << "Shared memory reader initialized successfully (Windows)" << std::endl;
+    return true;
+#else
     // Open existing shared memory
     shmFd = shm_open(shmName, O_RDONLY, 0666);
     if (shmFd == -1) {
@@ -46,6 +70,7 @@ bool SharedMemoryReader::openSharedMemory() {
     
     std::cout << "Shared memory reader initialized successfully (size=" << shmSize << " bytes)" << std::endl;
     return true;
+#endif
 }
 
 bool SharedMemoryReader::readLatestData(std::vector<uint8_t>& waveformData) {
@@ -85,6 +110,16 @@ bool SharedMemoryReader::readLatestData(std::vector<uint8_t>& waveformData) {
 }
 
 void SharedMemoryReader::cleanup() {
+#ifdef _WIN32
+    if (shmBase) {
+        UnmapViewOfFile(shmBase);
+        shmBase = nullptr;
+    }
+    if (shmHandle) {
+        CloseHandle(shmHandle);
+        shmHandle = nullptr;
+    }
+#else
     if (shmBase && shmBase != MAP_FAILED) {
         munmap(shmBase, shmSize);
         shmBase = nullptr;
@@ -94,7 +129,7 @@ void SharedMemoryReader::cleanup() {
         close(shmFd);
         shmFd = -1;
     }
-    
+#endif
     header = nullptr;
     shmInput = nullptr;
 }

@@ -1,10 +1,15 @@
 #ifndef SHARED_MEMORY_WRITER_H
 #define SHARED_MEMORY_WRITER_H
 
+#ifdef _WIN32
+#define NOMINMAX
+#include <windows.h>
+#else
 #include <sys/mman.h>
 #include <fcntl.h>
 #include <unistd.h>
 #include <sys/stat.h>
+#endif
 #include <vector>
 #include <mutex>
 #include <chrono>
@@ -25,7 +30,11 @@ private:
     void initializeHeader(int numStreams, int numChannels, int sampleRate);
     void writeDataBlocks(const std::vector<std::vector<std::vector<int>>>& amplifierData);
     
+#ifdef _WIN32
+    HANDLE shmHandle;
+#else
     int shmFd;
+#endif
     void* shmBase;
     size_t shmSize;
     const char* shmName;

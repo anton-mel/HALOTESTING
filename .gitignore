@@ -1,2 +1,4 @@
 /*.user
-modified-intan-rhx/
+*.exe
+*.o
+modified-intan-rhx/*

@@ -288,9 +288,12 @@ unix {
 win32: {
     LIBS += -L$$PWD/libraries/Windows/ -lOpenCL # OpenCL library
     LIBS += -L$$PWD/libraries/Windows/ -lokFrontPanel # Opal Kelly Front Panel library
+}
+
+# Only MSVC supports /DELAYLOAD and delayimp
+win32:msvc {
     LIBS += -L$$PWD/libraries/Windows/ -ldelayimp # Microsoft's Delay Import library
-    QMAKE_LFLAGS += /DELAYLOAD:okFrontPanel.dll # Use delayimp to only load okFrontPanel.dll when necessary,
-                                            # so we can give an error message when okFrontPanel.dll is missing
+    QMAKE_LFLAGS += /DELAYLOAD:okFrontPanel.dll # Delay-load okFrontPanel.dll under MSVC only
 }
 
 # Mac

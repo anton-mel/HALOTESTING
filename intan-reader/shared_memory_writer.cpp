@@ -3,7 +3,11 @@
 #include <cstring>
 
 SharedMemoryWriter::SharedMemoryWriter() 
+#ifdef _WIN32
+    : shmHandle(nullptr), shmBase(nullptr), shmSize(0), shmName("intan_rhx_shm_v1"), frameCounter(0),
+#else
     : shmFd(-1), shmBase(nullptr), shmSize(0), shmName("/intan_rhx_shm_v1"), frameCounter(0),
+#endif
       header(nullptr), shmOutput(nullptr), numStreams_(0), numChannels_(0), samplesPerBlock_(128) {
 }
 
@@ -33,9 +37,6 @@ bool SharedMemoryWriter::initialize(int numStreams, int numChannels, int sampleR
 }
 
 bool SharedMemoryWriter::createSharedMemory() {
-    // Remove existing shared memory if it exists
-    shm_unlink(shmName);
-    
     // Calculate size: header + (streams * channels * samples * sizeof(IntanDataBlock))
     size_t blocks = (size_t)numStreams_ * numChannels_ * samplesPerBlock_;
     shmSize = sizeof(IntanDataHeader) + blocks * sizeof(IntanDataBlock);
@@ -44,6 +45,25 @@ bool SharedMemoryWriter::createSharedMemory() {
               << " channels=" << numChannels_ 
               << " samples=" << samplesPerBlock_ 
               << " size=" << shmSize << " bytes" << std::endl;
+#ifdef _WIN32
+    // Create or open a named file mapping object backed by the system paging file
+    shmHandle = CreateFileMappingA(INVALID_HANDLE_VALUE, nullptr, PAGE_READWRITE, 0, static_cast<DWORD>(shmSize), "intan_rhx_shm_v1");
+    if (!shmHandle) {
+        std::cerr << "Failed to create shared memory mapping" << std::endl;
+        return false;
+    }
+    shmBase = MapViewOfFile(shmHandle, FILE_MAP_WRITE | FILE_MAP_READ, 0, 0, 0);
+    if (!shmBase) {
+        std::cerr << "Failed to map view of shared memory" << std::endl;
+        CloseHandle(shmHandle);
+        shmHandle = nullptr;
+        return false;
+    }
+    std::cout << "Shared memory created successfully (Windows)" << std::endl;
+    return true;
+#else
+    // Remove existing shared memory if it exists
+    shm_unlink(shmName);
     
     // Create shared memory segment
     shmFd = shm_open(shmName, O_CREAT | O_RDWR, 0666);
@@ -70,6 +90,7 @@ bool SharedMemoryWriter::createSharedMemory() {
     
     std::cout << "Shared memory created successfully: " << shmName << " (" << shmSize << " bytes)" << std::endl;
     return true;
+#endif
 }
 
 void SharedMemoryWriter::writeDataBlock(uint32_t timestamp, const std::vector<std::vector<std::vector<int>>>& amplifierData) {
@@ -123,6 +144,16 @@ void SharedMemoryWriter::writeDataBlocks(const std::vector<std::vector<std::vect
 }
 
 void SharedMemoryWriter::cleanup() {
+#ifdef _WIN32
+    if (shmBase) {
+        UnmapViewOfFile(shmBase);
+        shmBase = nullptr;
+    }
+    if (shmHandle) {
+        CloseHandle(shmHandle);
+        shmHandle = nullptr;
+    }
+#else
     if (shmBase && shmBase != MAP_FAILED) {
         munmap(shmBase, shmSize);
         shmBase = nullptr;
@@ -133,5 +164,6 @@ void SharedMemoryWriter::cleanup() {
     }
     // Clean up shared memory segment
     shm_unlink(shmName);
+#endif
     std::cout << "Shared memory writer cleaned up" << std::endl;
 }

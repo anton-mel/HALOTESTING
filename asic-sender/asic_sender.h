@@ -7,7 +7,7 @@
 #include <atomic>
 #include <thread>
 #include <memory>
-#include "okFrontPanel.h"
+#include "../intan-reader/includes/okFrontPanelDLL.h"
 
 // Forward declaration
 class FpgaLogger;
@@ -42,7 +42,7 @@ public:
     bool setThresholds(double lowThreshold, double highThreshold);
 
 private:
-    OpalKellyLegacy::okCFrontPanel* device_;
+    okCFrontPanel* device_;
     std::atomic<bool> running_;
     std::atomic<bool> initialized_;
     static const size_t BUF_LEN; // Must be multiple of 16 for USB 3.0

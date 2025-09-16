@@ -3,8 +3,32 @@
 # =============================================================================
 
 # Compiler Configuration
-CXX = clang++
-CXXFLAGS = -std=c++17 -Wall -Wextra -O2 -mmacosx-version-min=14.0
+# Platform detection and compiler/tool defaults
+ifeq ($(OS),Windows_NT)
+  EXEEXT := .exe
+  # Prefer clang++ from LLVM; fall back to g++ from MinGW if needed
+  CXX ?= clang++
+  # Remove macOS-specific flags; use standard warnings and optimizations
+  CXXFLAGS ?= -std=c++17 -Wall -Wextra -O2
+  # Utilities: use cmd's del for Windows shells
+  RM := cmd /C del /Q /F
+  PY := python
+  # No rpath on Windows; DLLs must be discoverable via PATH next to exe
+  RPATH_INTAN :=
+  RPATH_ASIC_SENDER :=
+  # Use dynamic loader shim; do not link import lib
+  OKFRONTPANEL_LIB :=
+else
+  EXEEXT :=
+  CXX = clang++
+  CXXFLAGS = -std=c++17 -Wall -Wextra -O2 -mmacosx-version-min=14.0
+  RM := rm -f
+  PY := python3
+  RPATH_INTAN := -Wl,-rpath,@loader_path/intan-reader
+  RPATH_ASIC_SENDER := -Wl,-rpath,@loader_path/asic-sender
+  OKFRONTPANEL_LIB := -lokFrontPanel
+  NULLDEV := /dev/null
+endif
 INCLUDES = -I. -Iintan-reader -Idata-analyser \
            -Iintan-reader/Engine/API/Abstract \
            -Iintan-reader/Engine/API/Hardware \
@@ -15,36 +39,43 @@ INCLUDES = -I. -Iintan-reader -Idata-analyser \
 # =============================================================================
 
 # Main Pipeline (Intan Reader + ASIC Sender + Data Logger)
-MAIN_TARGET = run_pipeline
+MAIN_TARGET = run_pipeline$(EXEEXT)
 MAIN_SOURCES = main.cpp data-analyser/fpga_logger.cpp data-analyser/halo_response_decoder.cpp intan-reader/shared_memory_reader.cpp
 MAIN_OBJECTS = $(MAIN_SOURCES:.cpp=.o)
 
 # Intan RHX Device Reader (Standalone Neural Data Acquisition)
-READER_TARGET = intan-reader/intan_reader
+READER_TARGET = intan-reader/intan_reader$(EXEEXT)
 USB3_SOURCES = intan-reader/intan_reader.cpp \
                intan-reader/shared_memory_writer.cpp \
                intan-reader/includes/rhd2000evalboardusb3.cpp \
                intan-reader/includes/rhd2000datablockusb3.cpp \
                intan-reader/includes/rhd2000registersusb3.cpp \
                intan-reader/includes/okFrontPanelDLL.cpp
+# Keep okFrontPanelDLL.cpp to dynamically load the DLL on Windows
 USB3_OBJECTS = $(USB3_SOURCES:.cpp=.o)
 
 # ASIC FPGA Interface (Seizure Detection FPGA Communication)
-ASIC_TARGET = asic/fpga_interface
+ASIC_TARGET = asic/fpga_interface$(EXEEXT)
 ASIC_SOURCES = asic/main.cpp asic/fpga_interface.cpp
 ASIC_OBJECTS = $(ASIC_SOURCES:.cpp=.o)
-ASIC_LDFLAGS = -Lasic -lokFrontPanel -Wl,-rpath,@loader_path/asic
+ASIC_LDFLAGS = -Lasic $(OKFRONTPANEL_LIB) -Wl,-rpath,@loader_path/asic
 
 # ASIC Sender (Waveform Data Transmission to Seizure Detection FPGA)
-ASIC_SENDER_TARGET = asic-sender/asic_sender
+ASIC_SENDER_TARGET = asic-sender/asic_sender$(EXEEXT)
 ASIC_SENDER_SOURCES = asic-sender/asic_sender.cpp
 ASIC_SENDER_OBJECTS = $(ASIC_SENDER_SOURCES:.cpp=.o)
-ASIC_SENDER_LDFLAGS = -Lasic-sender -lokFrontPanel -Wl,-rpath,@loader_path/asic-sender
+ASIC_SENDER_LDFLAGS = -Lasic-sender $(OKFRONTPANEL_LIB) -Wl,-rpath,@loader_path/asic-sender
 
 # Data Analyser
-DATA_ANALYSER_TARGET = data-analyser/fpga_logger
+DATA_ANALYSER_TARGET = data-analyser/fpga_logger$(EXEEXT)
 DATA_ANALYSER_SOURCES = data-analyser/fpga_logger.cpp data-analyser/halo_response_decoder.cpp
 DATA_ANALYSER_OBJECTS = $(DATA_ANALYSER_SOURCES:.cpp=.o)
+
+# Modified Intan RHX application output (Qt project)
+INTAN_DIR := modified-intan-rhx
+APP_TARGET := $(INTAN_DIR)/IntanRHX$(EXEEXT)
+APP_TARGET_RELEASE := $(INTAN_DIR)/release/IntanRHX$(EXEEXT)
+QMAKE ?= qmake
 
 # =============================================================================
 # PHONY TARGETS
@@ -56,8 +87,8 @@ DATA_ANALYSER_OBJECTS = $(DATA_ANALYSER_SOURCES:.cpp=.o)
 # BUILD TARGETS
 # =============================================================================
 
-# Default target - just the pipeline
-all: $(MAIN_TARGET)
+# Default target - build pipeline and modified Intan RHX app
+all: $(MAIN_TARGET) app
 
 # Build the modified Intan RHX app separately
 app: modified_intan_rhx
@@ -66,8 +97,8 @@ app: modified_intan_rhx
 $(MAIN_TARGET): $(MAIN_OBJECTS) $(USB3_OBJECTS) $(ASIC_SENDER_OBJECTS)
 	@echo "Building main pipeline..."
 	$(CXX) $(MAIN_OBJECTS) $(USB3_OBJECTS) $(ASIC_SENDER_OBJECTS) -o $(MAIN_TARGET) \
-		-Lintan-reader -Lasic-sender -lokFrontPanel \
-		-Wl,-rpath,@loader_path/intan-reader -Wl,-rpath,@loader_path/asic-sender
+		-Lintan-reader -Lasic-sender $(OKFRONTPANEL_LIB) \
+		$(RPATH_INTAN) $(RPATH_ASIC_SENDER)
 	@echo "Main pipeline built: $(MAIN_TARGET)"
 
 # Intan Reader (Standalone Neural Data Acquisition)
@@ -102,17 +133,22 @@ $(DATA_ANALYSER_TARGET): $(DATA_ANALYSER_OBJECTS)
 test_decoder: data-analyser/tests/test_decoder
 data-analyser/tests/test_decoder: data-analyser/tests/test_decoder.o data-analyser/halo_response_decoder.o
 	@echo "Building HALO decoder test..."
-	$(CXX) data-analyser/tests/test_decoder.o data-analyser/halo_response_decoder.o -o data-analyser/tests/test_decoder
+	$(CXX) data-analyser/tests/test_decoder.o data-analyser/halo_response_decoder.o -o data-analyser/tests/test_decoder$(EXEEXT)
 	@echo "HALO decoder test built: data-analyser/tests/test_decoder"
 
 data-analyser/tests/test_decoder.o: data-analyser/tests/test_decoder.cpp data-analyser/halo_response_decoder.h
 	$(CXX) $(CXXFLAGS) -c data-analyser/tests/test_decoder.cpp -o data-analyser/tests/test_decoder.o
 
 # Modified Intan RHX Pipeline
-modified_intan_rhx:
+modified_intan_rhx: $(APP_TARGET)
+
+$(APP_TARGET): $(INTAN_DIR)/IntanRHX.pro
 	@echo "Building modified Intan RHX pipeline..."
-	cd modified-intan-rhx && qmake IntanRHX.pro
-	cd modified-intan-rhx && $(MAKE)
+	cd $(INTAN_DIR) && $(QMAKE) -spec win32-g++ IntanRHX.pro || $(QMAKE) IntanRHX.pro
+	cd $(INTAN_DIR) && $(MAKE)
+	@if [ -f "$(APP_TARGET_RELEASE)" ]; then \
+		cp "$(APP_TARGET_RELEASE)" "$(APP_TARGET)"; \
+	fi
 	@echo "Modified Intan RHX pipeline built"
 
 # =============================================================================
@@ -131,21 +167,22 @@ modified_intan_rhx:
 # Clean pipeline build artifacts only
 clean:
 	@echo "Cleaning pipeline build artifacts..."
-	rm -f $(MAIN_OBJECTS) $(MAIN_TARGET)
-	rm -f $(USB3_OBJECTS)
-	rm -f $(ASIC_OBJECTS) $(ASIC_TARGET)
-	rm -f $(ASIC_SENDER_OBJECTS) $(ASIC_SENDER_TARGET)
-	rm -f $(DATA_ANALYSER_OBJECTS) $(DATA_ANALYSER_TARGET)
-	rm -f data-analyser/tests/test_decoder.o data-analyser/tests/test_decoder
-	rm -f asic-sender/tests/test_xem7310.o asic-sender/tests/test_xem7310
+	- $(RM) $(MAIN_OBJECTS) $(MAIN_TARGET) 2>nul
+	- $(RM) $(USB3_OBJECTS) 2>nul
+	- $(RM) $(ASIC_OBJECTS) $(ASIC_TARGET) 2>nul
+	- $(RM) $(ASIC_SENDER_OBJECTS) $(ASIC_SENDER_TARGET) 2>nul
+	- $(RM) $(DATA_ANALYSER_OBJECTS) $(DATA_ANALYSER_TARGET) 2>nul
+	- $(RM) data-analyser\tests\test_decoder.o data-analyser\tests\test_decoder$(EXEEXT) 2>nul
+	- $(RM) asic-sender\tests\test_xem7310.o asic-sender\tests\test_xem7310$(EXEEXT) 2>nul
 	cd intan-reader && $(MAKE) clean
 	@echo "Pipeline cleanup complete"
 
 # Clean modified Intan RHX app build artifacts
 clean-app:
 	@echo "Cleaning modified Intan RHX app build artifacts..."
-	cd modified-intan-rhx && $(MAKE) clean 2>/dev/null || true
-	rm -f modified-intan-rhx/Makefile modified-intan-rhx/Makefile.Debug modified-intan-rhx/Makefile.Release
+	cd $(INTAN_DIR) && $(MAKE) clean || true
+	rm -f $(INTAN_DIR)/Makefile $(INTAN_DIR)/Makefile.Debug $(INTAN_DIR)/Makefile.Release
+	rm -f $(APP_TARGET) $(APP_TARGET_RELEASE)
 	@echo "App cleanup complete"
 
 # Clean everything
@@ -184,7 +221,7 @@ run_asic_sender: $(ASIC_SENDER_TARGET)
 # Run data analyser summary
 run_data_analyser: $(DATA_ANALYSER_TARGET)
 	@echo "Running data analyser summary..."
-	cd data-analyser && python3 scripts/summarize_detections.py
+	cd data-analyser && $(PY) scripts/summarize_detections.py
 
 # Run modified Intan RHX pipeline
 run_modified_intan_rhx: modified_intan_rhx

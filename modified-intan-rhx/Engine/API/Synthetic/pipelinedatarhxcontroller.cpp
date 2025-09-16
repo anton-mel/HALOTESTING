@@ -35,15 +35,15 @@
 #include "pipelinedatarhxcontroller.h"
 
 PipelineDataRHXController::PipelineDataRHXController(ControllerType type_, AmplifierSampleRate sampleRate_) :
-    AbstractRHXController(type_, sampleRate_),
-    dataGenerator(new SynthDataBlockGenerator(type, getSampleRate(sampleRate))),
+    AbstractRHXController(type_, SampleRate1000Hz),
+    dataGenerator(new SynthDataBlockGenerator(type, getSampleRate(SampleRate1000Hz))),
     hasTCPData(false),
     tcpThreadRunning(false)
 {
     std::cout << "=== PIPELINE DATA RHX CONTROLLER INITIALIZED ===" << std::endl;
     std::cout << "This is our custom pipeline controller, not the synthetic controller!" << std::endl;
     std::cout << "Controller type: " << type << std::endl;
-    std::cout << "Sample rate: " << getSampleRate(sampleRate) << " Hz" << std::endl;
+    std::cout << "Sample rate: " << getSampleRate(SampleRate1000Hz) << " Hz" << std::endl;
     std::cout << "================================================" << std::endl;
 
     std::cout << "===== ATTEMPTING TO CONNECT TO SHARED MEMORY SUPPLIER ======" << std::endl;
@@ -76,7 +76,7 @@ PipelineDataRHXController::PipelineDataRHXController(ControllerType type_, Ampli
     // Initialize pacing to match synthetic generator timing
     pacingStart = std::chrono::steady_clock::now();
     // Initialize pacing to match producer once we know its advertised rate; default to controller's
-    dataBlockPeriodNs = 1.0e9 * ((double)RHXDataBlock::samplesPerDataBlock(type)) / getSampleRate(sampleRate);
+    dataBlockPeriodNs = 1.0e9 * ((double)RHXDataBlock::samplesPerDataBlock(type)) / getSampleRate(SampleRate1000Hz);
     pacingDeficitNs = 0.0;
 }
 
@@ -429,6 +429,22 @@ bool PipelineDataRHXController::connectToSharedMemory()
 {
     if (shmConnected) return true;
     // Layout: [Header | IntanDataBlock repeated ...], producer updates header->dataSize and posts sem
+#ifdef _WIN32
+    // On Windows, use a named file mapping object created by the producer
+    shmHandle = OpenFileMappingA(FILE_MAP_READ | FILE_MAP_WRITE, FALSE, shmName);
+    if (shmHandle == nullptr) {
+        return false;
+    }
+    shmBase = MapViewOfFile(shmHandle, FILE_MAP_READ | FILE_MAP_WRITE, 0, 0, 0);
+    if (shmBase == nullptr) {
+        CloseHandle(shmHandle);
+        shmHandle = nullptr;
+        return false;
+    }
+    // We do not know the size directly; the producer should place it in the header->dataSize at least
+    // Reserve a large maximum; we will guard accesses by header->dataSize
+    shmSize = SIZE_T(-1);
+#else
     shmFd = shm_open(shmName, O_RDWR, 0666);
     if (shmFd < 0) return false;
     struct stat st;
@@ -448,12 +464,24 @@ bool PipelineDataRHXController::connectToSharedMemory()
         shmFd = -1;
         return false;
     }
+#endif
     shmConnected = true;
     return true;
 }
 
 void PipelineDataRHXController::disconnectFromSharedMemory()
 {
+#ifdef _WIN32
+    if (shmBase) {
+        UnmapViewOfFile(shmBase);
+        shmBase = nullptr;
+        shmSize = 0;
+    }
+    if (shmHandle) {
+        CloseHandle(shmHandle);
+        shmHandle = nullptr;
+    }
+#else
     if (shmBase && shmBase != MAP_FAILED) {
         munmap(shmBase, shmSize);
         shmBase = nullptr;
@@ -463,6 +491,7 @@ void PipelineDataRHXController::disconnectFromSharedMemory()
         close(shmFd);
         shmFd = -1;
     }
+#endif
     shmConnected = false;
 }
 

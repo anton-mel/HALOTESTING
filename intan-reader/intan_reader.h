@@ -6,10 +6,12 @@
 #include <memory>
 #include <vector>
 
+// Include shared memory (which brings in Windows headers on _WIN32) BEFORE vendor headers
+// to avoid 'using namespace std' in vendor headers causing 'byte' ambiguity with Windows RPC.
+#include "shared_memory_writer.h"
 #include "includes/rhd2000evalboardusb3.h"
 #include "includes/rhd2000datablockusb3.h"
 #include "includes/rhd2000registersusb3.h"
-#include "shared_memory_writer.h"
 
 class IntanReader {
 public:

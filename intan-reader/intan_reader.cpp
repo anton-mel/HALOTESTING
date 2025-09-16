@@ -2,6 +2,7 @@
 #include <iostream>
 #include <thread>
 #include <chrono>
+#include <filesystem>
 
 IntanReader::IntanReader() 
     : running_(false) {
@@ -22,7 +23,7 @@ bool IntanReader::initialize() {
     sharedMemoryWriter_ = std::make_unique<SharedMemoryWriter>();
     int numStreams = 1; // Will be set after device is opened
     int numChannels = CHANNELS_PER_STREAM; // 32 channels per stream
-    int sampleRate = 30000; // 30kHz sample rate
+    int sampleRate = 1000; // 1kHz sample rate
     
     if (!sharedMemoryWriter_->initialize(numStreams, numChannels, sampleRate)) {
         std::cerr << "Failed to initialize shared memory writer." << std::endl;
@@ -58,8 +59,9 @@ bool IntanReader::openDevice() {
 
 bool IntanReader::uploadBitfile() {
     auto fileExists = [](const char* path) -> bool { 
-        struct stat st{}; 
-        return path && (::stat(path, &st) == 0) && S_ISREG(st.st_mode); 
+        if (!path) return false;
+        std::error_code ec;
+        return std::filesystem::is_regular_file(path, ec);
     };
     
     const char* envPath = std::getenv("RHD_BITFILE");
@@ -85,7 +87,7 @@ bool IntanReader::configureDevice() {
     // Initialize the controller
     controller_->initialize();
     
-    controller_->setSampleRate(Rhd2000EvalBoardUsb3::SampleRate30000Hz);
+    controller_->setSampleRate(Rhd2000EvalBoardUsb3::SampleRate1000Hz);
     controller_->setCableLengthFeet(Rhd2000EvalBoardUsb3::PortA, 3.0);
     controller_->enableDataStream(0, true);
 
@@ -203,7 +205,7 @@ void IntanReader::readDataLoop() {
     while (running_) {
         unsigned int fifoWords = controller_->getNumWordsInFifo();
         if (fifoWords < wordsPerBlock) { 
-            usleep(200); 
+            std::this_thread::sleep_for(std::chrono::microseconds(200)); 
             continue; 
         }
         
