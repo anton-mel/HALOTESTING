@@ -33,7 +33,7 @@ For Windows, ensure all required packages are installed. Primarity, you will nee
 ## TODO
 
 - ~~Decode ASIC response~~
-- Fix the loggin format to the HDF files
-- Make the pipeline run on the 1kHz aquisition frequencies
+- ~~Fix the loggin format to the HDF files~~
+- ~~Make the pipeline run on the 1kHz aquisition frequencies~~
 - Ensure the device is properly flushed and closed to prevent resource leaks or communication errors
-- Include additional data analysis required for the animal testing
+- ~~Include additional data analysis required for the animal testing~~
