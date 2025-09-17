@@ -523,7 +523,7 @@ void BoardSelectDialog::showDemoMessageBox()
         advancedStartupDialog.exec();
         
         // After configuration, start with pipeline controller
-        AmplifierSampleRate sampleRate = SampleRate20000Hz;
+        AmplifierSampleRate sampleRate = SampleRate1000Hz;
         StimStepSize stimStepSize = StimStepSize500nA;
         ControllerType controllerType = ControllerRecordUSB3; // Default to USB3 controller type
         
@@ -539,7 +539,7 @@ void BoardSelectDialog::showDemoMessageBox()
     }
     
     // Normal demo dialog flow
-    AmplifierSampleRate sampleRate = SampleRate20000Hz;
+    AmplifierSampleRate sampleRate = SampleRate1000Hz;
     StimStepSize stimStepSize = StimStepSize500nA;
     bool rememberSettings = false;
 

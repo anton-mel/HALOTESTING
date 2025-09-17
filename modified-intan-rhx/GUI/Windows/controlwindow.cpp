@@ -236,8 +236,18 @@ ControlWindow::ControlWindow(SystemState* state_, CommandParser* parser_, Contro
     controlButtons->addWidget(statusBars);
     controlButtons->addWidget(new QLabel("   "));
 
-    std::string sampleRateString =
-            AbstractRHXController::getSampleRateString(AbstractRHXController::nearestSampleRate(state->sampleRate->getNumericValue()));
+    // Display sample rate in the top toolbar. If Pipeline Data Controller is enabled, force UI to 1 kHz to match producer.
+    std::string sampleRateString;
+    {
+        QSettings settings;
+        bool usePipelineController = settings.value("rhxPipelineDataController", true).toBool();
+        if (usePipelineController) {
+            sampleRateString = "1.0 kHz";
+        } else {
+            sampleRateString = AbstractRHXController::getSampleRateString(
+                    AbstractRHXController::nearestSampleRate(state->sampleRate->getNumericValue()));
+        }
+    }
     QLabel *sampleRateLabel = new QLabel(QString::fromStdString(sampleRateString) + " " + tr("sample rate"), this);
     sampleRateLabel->setContentsMargins(margin, 0, margin, 0);
     controlButtons->addWidget(sampleRateLabel);

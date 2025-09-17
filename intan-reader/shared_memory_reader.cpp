@@ -53,21 +53,20 @@ bool SharedMemoryReader::readLatestData(std::vector<uint8_t>& waveformData) {
         return false;
     }
     
-    // Check if we have new data
-    if (header->timestamp == lastTimestamp) {
-        return false; // No new data
-    }
-    
     lastTimestamp = header->timestamp;
     
-    // Calculate number of data blocks
-    size_t headerSize = sizeof(IntanDataHeader);
+    // Calculate number of data blocks (all channels from all streams)
     size_t dataSize = header->dataSize;
     size_t numBlocks = dataSize / sizeof(IntanDataBlock);
     
-    // Convert neural data to waveform format
+    // Verify we have the expected number of channels
+    if (header->channelCount != 32) {
+        std::cerr << "[WARNING] Expected 32 channels, got " << header->channelCount << std::endl;
+    }
+    
+    // Convert neural data to waveform format for all channels
     waveformData.clear();
-    waveformData.reserve(numBlocks * sizeof(float));
+    waveformData.reserve(numBlocks); // Reserve space for all data blocks
     
     for (size_t i = 0; i < numBlocks; ++i) {
         IntanDataBlock& block = shmInput[i];
@@ -81,6 +80,7 @@ bool SharedMemoryReader::readLatestData(std::vector<uint8_t>& waveformData) {
         waveformData.push_back(byteValue);
     }
     
+    // Debug output removed for long-term stability
     return true;
 }
 

@@ -22,8 +22,8 @@
 #include "intan-reader/intan_reader.h"
 #include "intan-reader/shared_memory_reader.h"
 #include "asic-sender/asic_sender.h"
-#include "data-analyser/fpga_logger.h"
-#include "data-analyser/halo_response_decoder.h"
+#include "data-analyser/src/core/fpga_logger.h"
+#include "data-analyser/src/core/halo_response_decoder.h"
 
 int main(int /* argc */, char* /* argv */[]) {
     std::cout << "Testing Pipeline - Main Entry Point" << std::endl;

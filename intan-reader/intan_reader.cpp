@@ -22,7 +22,7 @@ bool IntanReader::initialize() {
     sharedMemoryWriter_ = std::make_unique<SharedMemoryWriter>();
     int numStreams = 1; // Will be set after device is opened
     int numChannels = CHANNELS_PER_STREAM; // 32 channels per stream
-    int sampleRate = 30000; // 30kHz sample rate
+    int sampleRate = 1000; // 1kHz sample rate
     
     if (!sharedMemoryWriter_->initialize(numStreams, numChannels, sampleRate)) {
         std::cerr << "Failed to initialize shared memory writer." << std::endl;
@@ -85,7 +85,7 @@ bool IntanReader::configureDevice() {
     // Initialize the controller
     controller_->initialize();
     
-    controller_->setSampleRate(Rhd2000EvalBoardUsb3::SampleRate30000Hz);
+    controller_->setSampleRate(Rhd2000EvalBoardUsb3::SampleRate1000Hz);
     controller_->setCableLengthFeet(Rhd2000EvalBoardUsb3::PortA, 3.0);
     controller_->enableDataStream(0, true);
 
@@ -97,31 +97,39 @@ bool IntanReader::configureDevice() {
     // set amplifier bandwidths and DSP cutoff before building register lists
     double dspCutoffFreq = chipRegisters->setDspCutoffFreq(10.0);
     chipRegisters->setLowerBandwidth(1.0);
-    chipRegisters->setUpperBandwidth(7500.0);
+    chipRegisters->setUpperBandwidth(500.0); // Reduced from 7500.0 to be within Nyquist limit (500 Hz for 1000 Hz sampling)
     
     std::cout << "Amplifier configuration:" << std::endl;
     std::cout << "  DSP cutoff frequency: " << dspCutoffFreq << " Hz" << std::endl;
     std::cout << "  Lower bandwidth: 1.0 Hz" << std::endl;
-    std::cout << "  Upper bandwidth: 7500.0 Hz" << std::endl;
+    std::cout << "  Upper bandwidth: 500.0 Hz" << std::endl;
     
     std::vector<int> commandList;
     int commandSequenceLength = 0;
     
     // AuxCmd1
     // First, let's create a command list for the AuxCmd1 slot.  This command
-    // sequence will create a 1 kHz, full-scale sine wave for impedance testing.
-    commandSequenceLength = chipRegisters->createCommandListZcheckDac(commandList, 1000.0, 128.0);
-    controller_->uploadCommandList(commandList, Rhd2000EvalBoardUsb3::AuxCmd1, 0);
-    controller_->selectAuxCommandLength(Rhd2000EvalBoardUsb3::AuxCmd1, 0, commandSequenceLength - 1);
-    controller_->selectAuxCommandBank(Rhd2000EvalBoardUsb3::PortA, Rhd2000EvalBoardUsb3::AuxCmd1, 0);
+    // sequence will create a 100 Hz, full-scale sine wave for impedance testing.
+    commandSequenceLength = chipRegisters->createCommandListZcheckDac(commandList, 100.0, 128.0);
+    if (commandSequenceLength > 0) {
+        controller_->uploadCommandList(commandList, Rhd2000EvalBoardUsb3::AuxCmd1, 0);
+        controller_->selectAuxCommandLength(Rhd2000EvalBoardUsb3::AuxCmd1, 0, commandSequenceLength - 1);
+        controller_->selectAuxCommandBank(Rhd2000EvalBoardUsb3::PortA, Rhd2000EvalBoardUsb3::AuxCmd1, 0);
+    } else {
+        std::cerr << "Warning: Failed to create AuxCmd1 command list" << std::endl;
+    }
     
     // AuxCmd2
     // Next, we'll create a command list for the AuxCmd2 slot.  This command sequence
     // will sample the temperature sensor and other auxiliary ADC inputs.
     commandSequenceLength = chipRegisters->createCommandListTempSensor(commandList);
-    controller_->uploadCommandList(commandList, Rhd2000EvalBoardUsb3::AuxCmd2, 0);
-    controller_->selectAuxCommandLength(Rhd2000EvalBoardUsb3::AuxCmd2, 0, commandSequenceLength - 1);
-    controller_->selectAuxCommandBank(Rhd2000EvalBoardUsb3::PortA, Rhd2000EvalBoardUsb3::AuxCmd2, 0);
+    if (commandSequenceLength > 0) {
+        controller_->uploadCommandList(commandList, Rhd2000EvalBoardUsb3::AuxCmd2, 0);
+        controller_->selectAuxCommandLength(Rhd2000EvalBoardUsb3::AuxCmd2, 0, commandSequenceLength - 1);
+        controller_->selectAuxCommandBank(Rhd2000EvalBoardUsb3::PortA, Rhd2000EvalBoardUsb3::AuxCmd2, 0);
+    } else {
+        std::cerr << "Warning: Failed to create AuxCmd2 command list" << std::endl;
+    }
     
     // AuxCmd3
     // For the AuxCmd3 slot, we will create two command sequences.  Both sequences

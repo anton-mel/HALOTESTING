@@ -141,9 +141,10 @@ void StartupDialog::accept()
 {
     if (controllerType == ControllerStimRecord) {
         switch (sampleRateComboBox->currentIndex()) {
-        case 0: *sampleRate = SampleRate20000Hz; break;
-        case 1: *sampleRate = SampleRate25000Hz; break;
-        case 2: *sampleRate = SampleRate30000Hz; break;
+        case 0: *sampleRate = SampleRate1000Hz; break; // default first item -> 1 kHz
+        case 1: *sampleRate = SampleRate20000Hz; break;
+        case 2: *sampleRate = SampleRate25000Hz; break;
+        case 3: *sampleRate = SampleRate30000Hz; break;
         }
 
         switch (stimStepComboBox->currentIndex()) {

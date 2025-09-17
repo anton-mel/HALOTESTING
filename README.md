@@ -5,11 +5,11 @@ Testing pipeline for HALO neural data acquisition and FPGA processing.
 ## Demo Screenshots
 
 ### Real-time Neural Data Visualization
-![Intan RHX GUI](demo/GUI.png)
+![Intan RHX GUI](DEMO/GUI.png)
 *Modified Intan RHX visualization interface showing real-time neural data acquisition*
 
 ### Seizure Detection Logging
-![Seizure Detection Logs](demo/logging.png)
+![Seizure Detection Logs](DEMO/logging.png)
 *Real-time seizure detection analysis with decoded FPGA responses showing normal activity, threshold exceeded events, and seizure detections*
 
 ## How to Run

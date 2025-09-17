@@ -87,11 +87,6 @@ void SharedMemoryWriter::writeDataBlock(uint32_t timestamp, const std::vector<st
     header->timestamp = timestamp;
     
     frameCounter++;
-    
-    // Debug output every 50 frames
-    // if (frameCounter % 50 == 0) {
-    //     std::cout << "SHM Published frame " << frameCounter << " ts=" << timestamp << std::endl;
-    // }
 }
 
 void SharedMemoryWriter::initializeHeader(int numStreams, int numChannels, int sampleRate) {

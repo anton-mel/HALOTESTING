@@ -6,12 +6,16 @@
 
 #include "main.h"
 
+
 int main(int argc, char* argv[]) {
+    (void)argc; // Suppress unused parameter warning
+    (void)argv; // Suppress unused parameter warning
     
+    int blockCount = 0; // Counter for data blocks read
 
     try {
         // Create RHX controller for USB3 recording controller
-        RHXController controller(ControllerRecordUSB3, SampleRate30000Hz, false);
+        RHXController controller(ControllerRecordUSB3, SampleRate1000Hz, false);
         
         // List available devices
         std::vector<std::string> devices = controller.listAvailableDeviceSerials();
@@ -83,7 +87,6 @@ int main(int argc, char* argv[]) {
         
         // Create data block for reading
         RHXDataBlock dataBlock(controller.getType(), controller.getNumEnabledDataStreams());
-        ControllerType controllerType = controller.getType();
         
         // Main data reading loop
         std::cout << "Reading data (Press Ctrl+C to stop)..." << std::endl;
@@ -91,12 +94,6 @@ int main(int argc, char* argv[]) {
         while (true) {
             if (controller.readDataBlock(&dataBlock)) {
                 blockCount++;
-                
-                // Print data every 10 blocks to avoid flooding console
-                if (blockCount % 10 == 0) {
-                    std::cout << "\nBlock #" << blockCount << std::endl;
-                    printDataBlock(&dataBlock, controllerType, 0);
-                }
                 
                 // Check for pipe read errors
                 if (controller.pipeReadError() != 0) {
@@ -112,7 +109,7 @@ int main(int argc, char* argv[]) {
         std::cout << "\nStopping data acquisition..." << std::endl;
         controller.flush();
         
-        std::cout << "Total blocks read: " << blockCount << std::endl;
+        // Block count output removed for long-term stability
         std::cout << "Device reader stopped successfully." << std::endl;
         
     } catch (const std::exception& e) {

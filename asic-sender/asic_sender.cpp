@@ -1,9 +1,11 @@
-#include "../data-analyser/fpga_logger.h"
+#include "../data-analyser/src/core/fpga_logger.h"
 #include "asic_sender.h"
 #include <unistd.h>
 #include <fcntl.h>
 #include <sys/select.h>
 #include <cstring>
+#include <chrono>
+#include <iomanip>
 
 // Static member definitions
 const size_t AsicSender::BUF_LEN = 16384; // Must be multiple of 16 for USB 3.0
@@ -219,7 +221,14 @@ void AsicSender::sendWaveformData(const std::vector<uint8_t>& waveformData) {
         paddedData.resize(BUF_LEN);
     }
     
-    std::cout << "Sending waveform data to the FPGA..." << std::endl;
+    // Get current timestamp
+    auto now = std::chrono::system_clock::now();
+    auto time_t = std::chrono::system_clock::to_time_t(now);
+    auto tm = *std::localtime(&time_t);
+    
+    std::cout << "[";
+    std::cout << std::put_time(&tm, "%Y-%m-%d %H:%M:%S");
+    std::cout << "] Sending waveform data to the FPGA..." << std::endl;
     
     // Send data to FPGA
     if (!writeToFpga(paddedData)) {
@@ -233,11 +242,18 @@ void AsicSender::sendWaveformData(const std::vector<uint8_t>& waveformData) {
         std::cerr << "Failed to read processed data from ASIC FPGA" << std::endl;
         return;
     } else {
-        std::cout << "Data successfully read from ASIC FPGA!" << std::endl;
+        // Get current timestamp for success message
+        auto now = std::chrono::system_clock::now();
+        auto time_t = std::chrono::system_clock::to_time_t(now);
+        auto tm = *std::localtime(&time_t);
+        
+        std::cout << "[";
+        std::cout << std::put_time(&tm, "%Y-%m-%d %H:%M:%S");
+        std::cout << "] Data successfully read from ASIC FPGA!" << std::endl;
     }
     
-    // Analyze FPGA response data
+    // Analyze FPGA response data with original neural data
     if (data_analyzer_) {
-        data_analyzer_->analyzeFpgaData(processedData);
+        data_analyzer_->analyzeFpgaData(processedData, waveformData);
     }
 }

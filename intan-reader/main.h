@@ -10,9 +10,6 @@
 #include "Engine/API/Hardware/rhxdatablock.h"
 #include "Engine/API/Hardware/rhxregisters.h"
 
-// Print data block contents to console
-void printDataBlock(const RHXDataBlock* dataBlock, ControllerType controllerType, int stream);
-
 // Main function for Intan RHX Device Reader
 int main(int argc, char* argv[]);
 

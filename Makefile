@@ -5,7 +5,7 @@
 # Compiler Configuration
 CXX = clang++
 CXXFLAGS = -std=c++17 -Wall -Wextra -O2 -mmacosx-version-min=14.0
-INCLUDES = -I. -Iintan-reader -Idata-analyser \
+INCLUDES = -I. -Iintan-reader -Idata-analyser -Idata-analyser/src/core -I/opt/homebrew/Cellar/hdf5/1.14.6/include \
            -Iintan-reader/Engine/API/Abstract \
            -Iintan-reader/Engine/API/Hardware \
            -Iintan-reader/includes
@@ -16,7 +16,7 @@ INCLUDES = -I. -Iintan-reader -Idata-analyser \
 
 # Main Pipeline (Intan Reader + ASIC Sender + Data Logger)
 MAIN_TARGET = run_pipeline
-MAIN_SOURCES = main.cpp data-analyser/fpga_logger.cpp data-analyser/halo_response_decoder.cpp intan-reader/shared_memory_reader.cpp
+MAIN_SOURCES = main.cpp data-analyser/src/core/fpga_logger.cpp data-analyser/src/core/halo_response_decoder.cpp data-analyser/src/core/hdf5_writer.cpp intan-reader/shared_memory_reader.cpp
 MAIN_OBJECTS = $(MAIN_SOURCES:.cpp=.o)
 
 # Intan RHX Device Reader (Standalone Neural Data Acquisition)
@@ -43,7 +43,7 @@ ASIC_SENDER_LDFLAGS = -Lasic-sender -lokFrontPanel -Wl,-rpath,@loader_path/asic-
 
 # Data Analyser
 DATA_ANALYSER_TARGET = data-analyser/fpga_logger
-DATA_ANALYSER_SOURCES = data-analyser/fpga_logger.cpp data-analyser/halo_response_decoder.cpp
+DATA_ANALYSER_SOURCES = data-analyser/src/core/fpga_logger.cpp data-analyser/src/core/halo_response_decoder.cpp data-analyser/src/core/hdf5_writer.cpp
 DATA_ANALYSER_OBJECTS = $(DATA_ANALYSER_SOURCES:.cpp=.o)
 
 # =============================================================================
@@ -66,7 +66,7 @@ app: modified_intan_rhx
 $(MAIN_TARGET): $(MAIN_OBJECTS) $(USB3_OBJECTS) $(ASIC_SENDER_OBJECTS)
 	@echo "Building main pipeline..."
 	$(CXX) $(MAIN_OBJECTS) $(USB3_OBJECTS) $(ASIC_SENDER_OBJECTS) -o $(MAIN_TARGET) \
-		-Lintan-reader -Lasic-sender -lokFrontPanel \
+		-Lintan-reader -Lasic-sender -L/opt/homebrew/Cellar/hdf5/1.14.6/lib -lokFrontPanel -lhdf5 \
 		-Wl,-rpath,@loader_path/intan-reader -Wl,-rpath,@loader_path/asic-sender
 	@echo "Main pipeline built: $(MAIN_TARGET)"
 
