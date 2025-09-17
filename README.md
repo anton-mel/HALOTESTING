@@ -32,6 +32,8 @@ For Windows, ensure all required packages are installed. Primarity, you will nee
 
 ## TODO
 
+- Write-up the pipeline SPEC
+- Verify the pipeline logic end-to-end
 - ~~Decode ASIC response~~
 - ~~Fix the loggin format to the HDF files~~
 - ~~Make the pipeline run on the 1kHz aquisition frequencies~~
