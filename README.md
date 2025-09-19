@@ -101,7 +101,7 @@ Current pipeline runs at `1kHz` sample rate. This provides the longest possible 
 > [!NOTE]
 > Sample rate configuration is handled manually by the maintainer due to the separated workload architecture. Contact the maintainer if you need to update the sample rate, as the Intan GUI is no longer responsible for it.
 
-### Pipeline failed over time
+### Pipeline failed over time?
 
 > [!WARNING]
 > The pipeline has not been rigorously tested in the development stage for buffer overflow, but we provide some approximate risk analysis above. Contact the maintainer, if the pipeline failed.
