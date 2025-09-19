@@ -52,7 +52,7 @@ Mainly note, this solution provides a PC-in-the-loop approach for temporal testi
 
 ### How to Run
 
-Connect both devices to the host PC via USB3. First, launch the pipeline for logging, then start the required GUI interfaces.
+Connect both devices to the host PC via USB3. First, launch the pipeline for logging, then start the required GUI.
 
 > [!NOTE]
 > If the pipeline cannot establish a connection to the device, try power-cycling (restarting) the devices. It should flush the corrupted drivers.
