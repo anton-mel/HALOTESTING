@@ -64,7 +64,7 @@ The pipeline runs asynchronously for reading neural data and sending it for proc
 > [!NOTE]
 > By separating these workloads, we give up certain flexibility in configuring the device as the headers should be sent over from one process to another with correct synchronization.
 
-FPGA is configured with BCI bitstream `asic-sender/First.bit`. You can regenerate the BCI bitstream using the Xilinx Vivado project (contact Rohan/Raghav). See HALO documentation in `data-analyser/docs` for more details on the HALO APIs.
+FPGA is configured with BCI bitstream `asic-sender/First.bit`. You can regenerate the BCI bitstream using the Xilinx Vivado project. See HALO documentation in `data-analyser/docs` for more details on the HALO APIs.
 
 Overall, `main.cpp` initializes and interconnects:
 - (1) the Intan RHX device reader thread
