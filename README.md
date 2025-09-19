@@ -104,7 +104,7 @@ Current pipeline runs at `1kHz` sample rate. This provides the longest possible 
 ### Pipeline failed over time
 
 > [!WARNING]
-> The pipeline has not been rigorously tested in the development stage for buffer overflow, but we provide some approximate risk analysis above. Contact the maintainer.
+> The pipeline has not been rigorously tested in the development stage for buffer overflow, but we provide some approximate risk analysis above. Contact the maintainer, if the pipeline failed.
 
 ## intan-reader
 
@@ -153,7 +153,7 @@ Output: 16,384 raw bytes (uint8_t)
 ### [TODO] ASIC Response & RAW Data Decoding
 
 > [!WARNING]
-> The current decoding is likely INVALID because it makes assumptions without understanding the actual FPGA pipeline implementation. Without proper documentation of the SCALO architecture's output format, we are essentially guessing what the FPGA computed.
+> The current decoding is likely INVALID because it makes assumptions without understanding the actual FPGA pipeline implementation. Without proper documentation of the SCALO architecture's output format, we are essentially right now guessing what the FPGA computed.
 
 ### [TODO] Confidence & Detection Logic
 
