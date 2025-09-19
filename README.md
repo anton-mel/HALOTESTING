@@ -32,7 +32,7 @@ This work is part of the HALO Brain Computer Interface workload testing. It inte
 
 ### Pipeline Overview
 
-Mainly note, this solution provides a PC-in-the-loop approach for temporal testing of the processing part of the chip. **The next iteration will involve leveraging data-acquisition network-on-chip for fully implanted use.**
+Mainly note, this solution provides a PC-in-the-loop approach for temporal testing of the processing part of the chip. The next iteration will involve leveraging data-acquisition network-on-chip for fully implanted use.
 
 ```
                 Logging (H5) ──→ Data Dashboard
