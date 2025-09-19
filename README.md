@@ -6,7 +6,7 @@
 
 ## Table of Contents
 
-This project can be split into the following sections, each corresponding to its own folder and file names listed below. We summarize them here for brevity.
+This project can be split into the following sections:
 
 - [Introduction and Getting Started](#introduction)
 - [main.cpp](#maincpp)
