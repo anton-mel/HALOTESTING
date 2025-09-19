@@ -59,7 +59,7 @@ Connect both devices to the host PC via USB3. First, launch the pipeline for log
 
 ## main.cpp
 
-The pipeline runs asynchronously using 2 threads for reading neural data and sending it for processing on the FPGA. We decouple the Intan reader and the ASIC sender because the Opal Kelly SDKs/drivers conflict when linked together.
+The pipeline runs asynchronously for reading neural data and sending it for processing on the FPGA. We decouple the Intan reader and the ASIC sender because the Opal Kelly SDKs/drivers conflict when linked together.
 
 > [!NOTE]
 > By separating these workloads, we give up certain flexibility in configuring the device as the headers should be sent over from one process to another with correct synchronization.
