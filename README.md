@@ -14,7 +14,7 @@ This project can be split into the following sections:
     - [How to update the data sample rate?](#sample-rate-update)
     - [How to set-up seizure threshold?](#configurations)
 - [intan-reader/](#intan-reader)
-    - [Pipeline fails over time](#pipeline-failed-over-time)
+    - [Pipeline fails over long time](#pipeline-failed-over-time)
     - [Waveform ADC and DAC Assumptions](#waveform-scaling)
     - [What if Intan Device is Missing?](#intan-device-missing)
 - [asic-sender/](#asic-sender)
