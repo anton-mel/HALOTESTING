@@ -10,7 +10,7 @@ This project can be split into the following sections:
 
 - [Introduction and Getting Started](#introduction)
 - [main.cpp](#maincpp)
-    - [What if connection fails?](#how-to-run)
+    - [What if connection fails on restart?](#how-to-run)
     - [How to update the data sample rate?](#sample-rate-update)
     - [How to set-up seizure threshold?](#configurations)
 - [intan-reader/](#intan-reader)
