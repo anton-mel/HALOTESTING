@@ -150,7 +150,7 @@ FPGA Processing (Pipeline 6: NEO → THR → GATE)
 Output: 16,384 raw bytes (uint8_t)
 ```
 
-### [TODO] ASIC Response & Decoding
+### [TODO] ASIC Response & RAW Data Decoding
 
 > [!WARNING]
 > The current decoding is likely INVALID because it makes assumptions without understanding the actual FPGA pipeline implementation. Without proper documentation of the SCALO architecture's output format, we are essentially guessing what the FPGA computed.
