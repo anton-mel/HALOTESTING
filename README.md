@@ -8,7 +8,7 @@
 
 This project can be split into the following sections, each corresponding to its own folder and file names listed below. We summarize them here for brevity.
 
-- [Introduction and basics](#introduction)
+- [Introduction and Getting Started](#introduction)
 - [main.cpp](#maincpp)
     - [What if connection fails?](#how-to-run)
     - [How to update the data sample rate?](#sample-rate-update)
@@ -35,7 +35,7 @@ This work is part of the HALO Brain Computer Interface workload testing. It inte
 Mainly note, this solution provides a PC-in-the-loop approach for temporal testing of the processing part of the chip. **The next iteration will involve leveraging data-acquisition network-on-chip for fully implanted use.**
 
 ```
-        Logging (H5) ──→ Data Dashboard
+                Logging (H5) ──→ Data Dashboard
                     ↑ 
     Intan RHX ──→ PC ⟷ ASIC
                     ↓
