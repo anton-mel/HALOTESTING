@@ -99,7 +99,7 @@ Current pipeline runs at `1kHz` sample rate. This provides the longest possible 
 - **Shared memory**: Fixed size, no overflow risk (circular overwrite) 
 
 > [!NOTE]
-> Sample rate configuration is handled manually by the maintainer due to the separated workload architecture. Contact the maintainer if you need to update the sample rate, as the Intan GUI is no longer responsible for this in pipelined mode.
+> Sample rate configuration is handled manually by the maintainer due to the separated workload architecture. Contact the maintainer if you need to update the sample rate, as the Intan GUI is no longer responsible for it.
 
 ### Pipeline failed over time
 
