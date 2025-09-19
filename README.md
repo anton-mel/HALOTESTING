@@ -19,7 +19,7 @@ This project can be split into the following sections:
     - [What if Intan Device is Missing?](#intan-device-missing)
 - [asic-sender/](#asic-sender)
     - [TODO: Why decoder might be wrong...](#raw-asic-response-structure)
-    - [Memory and logging](#logging)
+    - [Memory and logging constraints](#logging)
 - [data-analyser/](#data-analyser)
 - [modified-intan-rhx/](#modified-intan-rhx)
 
