@@ -155,11 +155,11 @@ Output: 16,384 raw bytes (uint8_t)
 > [!WARNING]
 > The current decoding is likely INVALID because it makes assumptions without understanding the actual FPGA pipeline implementation. Without proper documentation of the SCALO architecture's output format, we are essentially guessing what the FPGA computed.
 
-### Confidence & Detection Logic
+### [TODO] Confidence & Detection Logic
 
 This part is computed as normalized variance of all 16,384 bytes in the FPGA response (a 0–1 activity metric).
 
-### Timestamp Matching Issue
+### [TODO] Timestamp Matching Issue
 
 - **No explicit matching**: Timestamps are **not synchronized** between input and response
 - **Response timestamp**: Generated when FPGA response is received
