@@ -126,7 +126,7 @@ This folder connects to the Intan RHX device (Opal Kelly XEM7310), acquires ampl
 ### Intan Device Missing
 
 > [!NOTE]
-> If the Intan RHX Device cannot be found on pipeline start-up, this could potentially be caused if you are already running the Intan GUI for waveform visualization without enabling pipelined mode (see `modified-intan-rhx` section). The GUI will then occupy the cable and block any other readers. To fix, try closing the GUI.
+> If the Intan RHX Device cannot be found on pipeline start-up, this could potentially be caused if you are already running the GUI for waveform visualization without enabling pipelined mode (see `modified-intan-rhx` section). The GUI will then occupy the cable and block any other readers. To fix, try closing the GUI.
 
 ## asic-sender
 
