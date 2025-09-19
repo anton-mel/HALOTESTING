@@ -210,8 +210,7 @@ make run
 
 The GUIs (waveform display and data dashboard) should be built separately in `modified-intan-rhx/` and `data-analyser/` in a similar way.
 
-For Windows, ensure required toolchains are installed. Primarily, have `mingw32-make`, `mingw64`, or MSVC in your PATH. The GUIs use Qt. Download the Qt installer from the official website: 
-https://www.qt.io/download-qt-installer.
+For Windows, ensure required toolchains are installed. Primarily, have `mingw32-make`, `mingw64`, or MSVC in your PATH. The GUIs use Qt. Download the Qt installer from the [official website](https://www.qt.io/download-qt-installer).
 
 > [!NOTE]
 > For chip documentation, please request access.
